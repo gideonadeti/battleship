@@ -1,4 +1,4 @@
-import Player from "../src/models/player"
+import Player from '../src/models/player'
 
 test('Player can attack enemy gameboard', () => {
   const player = new Player()
