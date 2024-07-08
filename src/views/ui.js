@@ -47,4 +47,20 @@ export default class UI {
       }
     })
   }
+
+  static renderBoards (players) {
+    players.forEach((player) => {
+      const board = document.querySelector(`.${player.name} .game-board`)
+      for (let x = 0; x < 10; x++) {
+        for (let y = 0; y < 10; y++) {
+          const cell = board.querySelector(
+            `.cell[data-row="${x + 1}"][data-col="${y + 1}"]`
+          )
+          if (player.gameBoard.board[x][y] !== null) {
+            cell.classList.add(`${player.name}-ship`)
+          }
+        }
+      }
+    })
+  }
 }
