@@ -1,4 +1,9 @@
 export default class UI {
+  static startButton = document.querySelector('.start-button')
+  static notification = document.querySelector('.notification')
+  static computerBoard = document.querySelector('.computer .game-board')
+  static playerBoard = document.querySelector('.player .game-board')
+
   static initialize () {
     this.createBoards()
   }
@@ -62,5 +67,11 @@ export default class UI {
         }
       }
     })
+  }
+
+  static showComputerBoard () {
+    this.startButton.style.display = 'none'
+    this.computerBoard.style.opacity = 1
+    this.computerBoard.style.pointerEvents = 'auto'
   }
 }

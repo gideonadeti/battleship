@@ -15,4 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const { player, computer } = createPlayers()
 
   UI.renderBoards([player, computer])
+
+  UI.startButton.addEventListener('click', () => {
+    UI.showComputerBoard()
+  })
 })
