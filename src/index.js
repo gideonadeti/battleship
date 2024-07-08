@@ -5,6 +5,6 @@ import './index.scss'
 import * as bootstrap from 'bootstrap'
 
 import UI from './views/ui'
-import Gameboard from './models/gameboard'
+import GameBoard from './models/game-board'
 import Player from './models/player'
 import Ship from './models/ship'

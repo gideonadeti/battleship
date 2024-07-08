@@ -1,8 +1,14 @@
-// Import all of Bootstrap's CSS
-@import "bootstrap/scss/bootstrap";
+// Import all of Bootstrap's SCSS
+@import "~bootstrap/scss/bootstrap";
+
+// Import Bootstrap Icons CSS
+@import "~bootstrap-icons/font/bootstrap-icons.css";
 
 /* Import Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap");
+
+// Custom variables
+$tertiary: #adb5bd;
 
 /* Standards */
 h1,
@@ -29,5 +35,86 @@ footer a {
 
   &:hover {
     text-decoration: underline;
+  }
+}
+
+main {
+  display: grid;
+  grid-template-rows: 84% 6% 10%;
+
+  .game-boards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5rem;
+    user-select: none;
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .game-board {
+      display: grid;
+      grid-template-columns: repeat(11, 2.5rem);
+      grid-template-rows: repeat(11, 2.5rem);
+      margin-top: 0.25rem;
+
+      .cell {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid $tertiary;
+
+        &:hover {
+          border: 2px solid $secondary;
+        }
+
+        &.label {
+          background-color: $tertiary;
+          border: none;
+          font-weight: bold;
+        }
+
+        &.player-ship {
+          background-color: $secondary;
+          border: none;
+        }
+
+        &.attacked {
+          pointer-events: none;
+          border: none;
+        }
+
+        &.hit {
+          background-color: $danger;
+        }
+
+        &.miss {
+          background-color: $light;
+        }
+      }
+    }
+
+    .computer {
+      .game-board {
+        filter: 0.25rem;
+        pointer-events: none;
+      }
+    }
+  }
+
+  .randomize {
+    cursor: pointer;
+    transition: transform 0.3s;
+
+    &:hover {
+      transform: translateX(6px);
+    }
+  }
+
+  .form-check {
+    margin-bottom: 0;
   }
 }
