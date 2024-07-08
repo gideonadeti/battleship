@@ -99,7 +99,7 @@ main {
 
     .computer {
       .game-board {
-        filter: 0.25rem;
+        filter: blur(4px);
         pointer-events: none;
       }
     }
