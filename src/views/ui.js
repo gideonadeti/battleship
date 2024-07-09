@@ -74,4 +74,24 @@ export default class UI {
     this.computerBoard.style.opacity = 1
     this.computerBoard.style.pointerEvents = 'auto'
   }
+
+  static updateNotification (text) {
+    this.notification.textContent = text
+  }
+
+  static fillCell (cell, hit) {
+    const content = document.createElement('p')
+    content.classList.add('content')
+    cell.classList.add('attacked')
+
+    if (hit) {
+      content.textContent = 'X'
+      content.classList.add('text-danger')
+    } else {
+      content.textContent = 'O'
+      content.classList.add('text-primary')
+    }
+
+    cell.appendChild(content)
+  }
 }

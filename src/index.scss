@@ -9,6 +9,7 @@
 
 // Custom variables
 $tertiary: #adb5bd;
+$secondary-subtle: #e2e3e5;
 
 /* Standards */
 h1,
@@ -66,6 +67,11 @@ main {
         justify-content: center;
         align-items: center;
         border: 1px solid $tertiary;
+        cursor: pointer;
+
+        .content {
+          font-weight: bolder;
+        }
 
         &:hover {
           border: 2px solid $secondary;
@@ -78,21 +84,13 @@ main {
         }
 
         &.player-ship {
-          background-color: $secondary;
+          background-color: $tertiary !important;
           border: none;
         }
 
         &.attacked {
           pointer-events: none;
-          border: none;
-        }
-
-        &.hit {
-          background-color: $danger;
-        }
-
-        &.miss {
-          background-color: $light;
+          background-color: $secondary-subtle;
         }
       }
     }

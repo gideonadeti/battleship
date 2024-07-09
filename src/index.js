@@ -9,6 +9,7 @@ import GameBoard from './models/game-board'
 import Player from './models/player'
 import Ship from './models/ship'
 import createPlayers from './models/create-players'
+import startGame from './models/start-game'
 
 document.addEventListener('DOMContentLoaded', () => {
   UI.initialize()
@@ -18,5 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   UI.startButton.addEventListener('click', () => {
     UI.showComputerBoard()
+    startGame.initialize(player, computer)
   })
 })
