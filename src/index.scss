@@ -81,16 +81,19 @@ main {
           background-color: $tertiary;
           border: none;
           font-weight: bold;
+          cursor: unset;
         }
 
         &.player-ship {
           background-color: $tertiary !important;
           border: none;
+          cursor: unset;
         }
 
         &.attacked {
           pointer-events: none;
           background-color: $secondary-subtle;
+          cursor: unset;
         }
       }
     }
