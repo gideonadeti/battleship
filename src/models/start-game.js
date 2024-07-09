@@ -27,9 +27,9 @@ export default class StartGame {
     UI.computerBoard.addEventListener('click', this.handlePlayerAttackBound)
   }
 
-  static getDelayTime () {
+  static getDelayTime (smart = false) {
     // Min is 500ms, Max is 2000ms
-    return Math.random() * 1500 + 500
+    return smart ? Math.random() * 1500 + 500 : Math.random() * 500 + 500
   }
 
   static handleComputerAttack (player, computer) {
@@ -57,11 +57,83 @@ export default class StartGame {
         UI.updateNotification('Your turn.')
       } else {
         setTimeout(
-          () => this.handleComputerAttack(this.player, this.computer),
-          this.getDelayTime()
+          () => this.handleSmartComputerAttack(x, y, player, computer),
+          this.getDelayTime(true)
         )
       }
     }
+  }
+
+  static handleSmartComputerAttack (x, y, player, computer) {
+    const ship = player.gameBoard.board[x][y]
+    let currentIndex = 0
+    let currentX = x
+    let currentY = y
+
+    const performAttack = () => {
+      while (!ship.isSunk()) {
+        const direction = this.getDirectionVector(currentIndex)
+        const adjacentX = currentX + direction.dx
+        const adjacentY = currentY + direction.dy
+
+        if (
+          adjacentX >= 0 &&
+          adjacentX < 10 &&
+          adjacentY >= 0 &&
+          adjacentY < 10
+        ) {
+          const adjacentCell = document.querySelector(
+            `.player .game-board .cell[data-row="${adjacentX + 1}"][data-col="${
+              adjacentY + 1
+            }"]`
+          )
+          if (!adjacentCell.classList.contains('attacked')) {
+            const hit = computer.attack(player, adjacentX, adjacentY)
+            UI.fillCell(adjacentCell, hit)
+
+            if (player.gameBoard.areAllShipsSunk()) {
+              UI.updateNotification('You lose!')
+              UI.computerBoard.removeEventListener(
+                'click',
+                this.handlePlayerAttackBound
+              )
+              return // Exit the function if all ships are sunk
+            } else {
+              if (!hit) {
+                this.currentPlayer = 'player'
+                UI.updateNotification('Your turn.')
+                return // Exit the function to allow player's turn
+              } else {
+                setTimeout(() => {
+                  currentX = adjacentX
+                  currentY = adjacentY
+                  performAttack() // Re-enter the function after the delay
+                }, this.getDelayTime(true))
+                return // Exit the function to wait for the delay
+              }
+            }
+          } else {
+            currentIndex = (currentIndex + 1) % 4
+          }
+        } else {
+          currentIndex = (currentIndex + 1) % 4
+        }
+      }
+
+      this.handleComputerAttack(player, computer)
+    }
+
+    performAttack()
+  }
+
+  static getDirectionVector (index) {
+    const directions = [
+      { dx: 0, dy: 1 },
+      { dx: -1, dy: 0 },
+      { dx: 0, dy: -1 },
+      { dx: 1, dy: 0 }
+    ]
+    return directions[index]
   }
 
   static handlePlayerAttack (event) {
@@ -69,7 +141,8 @@ export default class StartGame {
       const cell = event.target
       if (
         cell.classList.contains('cell') &&
-        !cell.classList.contains('attacked')
+        !cell.classList.contains('attacked') &&
+        !cell.classList.contains('label')
       ) {
         const x = parseInt(cell.dataset.row, 10) - 1
         const y = parseInt(cell.dataset.col, 10) - 1
