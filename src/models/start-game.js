@@ -4,6 +4,7 @@ export default class StartGame {
   static currentPlayer
   static player
   static computer
+  static handlePlayerAttackBound
 
   // Initialize random starter
   static initialize (player, computer) {
@@ -21,15 +22,14 @@ export default class StartGame {
       )
     }
 
-    UI.computerBoard.addEventListener(
-      'click',
-      this.handlePlayerAttack.bind(this)
-    )
+    // Bind the function once and store the reference
+    this.handlePlayerAttackBound = this.handlePlayerAttack.bind(this)
+    UI.computerBoard.addEventListener('click', this.handlePlayerAttackBound)
   }
 
   static getDelayTime () {
-    // Min is 500ms Max is 3000ms
-    return Math.random() * 2500 + 500
+    // Min is 500ms, Max is 2000ms
+    return Math.random() * 1500 + 500
   }
 
   static handleComputerAttack (player, computer) {
@@ -47,9 +47,20 @@ export default class StartGame {
     UI.fillCell(cell, hit)
     if (player.gameBoard.areAllShipsSunk()) {
       UI.updateNotification('You lose!')
+      UI.computerBoard.removeEventListener(
+        'click',
+        this.handlePlayerAttackBound
+      )
     } else {
-      this.currentPlayer = 'player'
-      UI.updateNotification('Your turn.')
+      if (!hit) {
+        this.currentPlayer = 'player'
+        UI.updateNotification('Your turn.')
+      } else {
+        setTimeout(
+          () => this.handleComputerAttack(this.player, this.computer),
+          this.getDelayTime()
+        )
+      }
     }
   }
 
@@ -68,15 +79,17 @@ export default class StartGame {
           UI.updateNotification('You won!')
           UI.computerBoard.removeEventListener(
             'click',
-            this.handlePlayerAttack.bind(this)
+            this.handlePlayerAttackBound
           )
         } else {
-          this.currentPlayer = 'computer'
-          UI.updateNotification("Computer's turn, please wait.")
-          setTimeout(
-            () => this.handleComputerAttack(this.player, this.computer),
-            this.getDelayTime()
-          )
+          if (!hit) {
+            this.currentPlayer = 'computer'
+            UI.updateNotification("Computer's turn, please wait.")
+            setTimeout(
+              () => this.handleComputerAttack(this.player, this.computer),
+              this.getDelayTime()
+            )
+          }
         }
       }
     }
