@@ -5,33 +5,25 @@ export default function createPlayers () {
   const player = new Player('player')
   const computer = new Player('computer')
 
-  // Create player ships
-  const playerCarrier = new Ship(5)
-  const playerBattleship = new Ship(4)
-  const playerCruiser = new Ship(3)
-  const playerSubmarine = new Ship(3)
-  const playerDestroyer = new Ship(2)
+  const shipLengths = [5, 4, 3, 3, 2]
 
-  // Place ships on the player's board
-  player.gameBoard.placeShip(playerCarrier, 1, 2, 'horizontal')
-  player.gameBoard.placeShip(playerBattleship, 3, 2, 'vertical')
-  player.gameBoard.placeShip(playerCruiser, 3, 6, 'horizontal')
-  player.gameBoard.placeShip(playerSubmarine, 5, 5, 'vertical')
-  player.gameBoard.placeShip(playerDestroyer, 6, 7, 'horizontal')
+  // Function to randomly place ships on a player's board
+  const placeShipsRandomly = (player) => {
+    shipLengths.forEach((length) => {
+      const ship = new Ship(length)
+      let placed = false
+      do {
+        const x = Math.floor(Math.random() * 10)
+        const y = Math.floor(Math.random() * 10)
+        const orientation = Math.random() > 0.5 ? 'horizontal' : 'vertical'
+        placed = player.gameBoard.placeShip(ship, x, y, orientation)
+      } while (!placed)
+    })
+  }
 
-  // Create computer ships
-  const computerCarrier = new Ship(5)
-  const computerBattleship = new Ship(4)
-  const computerCruiser = new Ship(3)
-  const computerSubmarine = new Ship(3)
-  const computerDestroyer = new Ship(2)
-
-  // Place ships on the computer's board (for now, use fixed positions)
-  computer.gameBoard.placeShip(computerCarrier, 3, 3, 'horizontal')
-  computer.gameBoard.placeShip(computerBattleship, 4, 1, 'vertical')
-  computer.gameBoard.placeShip(computerCruiser, 7, 7, 'horizontal')
-  computer.gameBoard.placeShip(computerSubmarine, 5, 4, 'vertical')
-  computer.gameBoard.placeShip(computerDestroyer, 1, 2, 'horizontal')
+  // Randomly place ships for both players
+  placeShipsRandomly(player)
+  placeShipsRandomly(computer)
 
   // Return the players
   return {

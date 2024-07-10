@@ -25,6 +25,7 @@ export default class GameBoard {
   }
 
   isValidPlacement (ship, x, y, orientation) {
+    // Boundaries check
     if (
       x < 0 ||
       y < 0 ||
@@ -34,11 +35,30 @@ export default class GameBoard {
       return false
     }
 
+    // Overlap check
     for (let i = 0; i < ship.length; i++) {
-      if (orientation === 'horizontal' && this.board[x][y + i] !== null) {
+      const checkX = x + (orientation === 'vertical' ? i : 0)
+      const checkY = y + (orientation === 'horizontal' ? i : 0)
+
+      if (this.board[checkX][checkY] !== null) {
         return false
-      } else if (orientation === 'vertical' && this.board[x + i][y] !== null) {
-        return false
+      }
+
+      // Spacing check
+      for (let dx = -1; dx <= 1; dx++) {
+        for (let dy = -1; dy <= 1; dy++) {
+          const adjX = checkX + dx
+          const adjY = checkY + dy
+          if (
+            adjX >= 0 &&
+            adjX < 10 &&
+            adjY >= 0 &&
+            adjY < 10 &&
+            this.board[adjX][adjY] !== null
+          ) {
+            return false
+          }
+        }
       }
     }
 

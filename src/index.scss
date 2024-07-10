@@ -66,7 +66,7 @@ main {
         display: flex;
         justify-content: center;
         align-items: center;
-        border: 1px solid $tertiary;
+        border: 1px solid $secondary-subtle;
         cursor: pointer;
 
         .content {
@@ -78,7 +78,7 @@ main {
         }
 
         &.label {
-          background-color: $tertiary;
+          background-color: $secondary-subtle;
           border: none;
           font-weight: bold;
           cursor: unset;
@@ -92,7 +92,7 @@ main {
 
         &.attacked {
           pointer-events: none;
-          background-color: $secondary-subtle;
+          background-color: $light;
           cursor: unset;
         }
       }
