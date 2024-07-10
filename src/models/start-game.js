@@ -112,7 +112,6 @@ export default class StartGame {
               } else {
                 this.orientation = 'vertical'
               }
-              console.log(this.orientation)
               this.currentX = adjacentX
               this.currentY = adjacentY
               setTimeout(
@@ -128,13 +127,11 @@ export default class StartGame {
                   this.currentIndex === 0
                 ) {
                   this.currentIndex = 2
-                  this.currentPlayer = 'player'
-                  UI.updateNotification('Your turn.')
                 } else {
                   this.currentIndex = 3
-                  this.currentPlayer = 'player'
-                  UI.updateNotification('Your turn.')
                 }
+                this.currentPlayer = 'player'
+                UI.updateNotification('Your turn.')
               } else {
                 this.currentIndex++
                 this.currentPlayer = 'player'
@@ -199,10 +196,10 @@ export default class StartGame {
 
   static getDirectionVector (index) {
     const directions = [
-      { dx: 0, dy: 1 },
-      { dx: -1, dy: 0 },
-      { dx: 0, dy: -1 },
-      { dx: 1, dy: 0 }
+      { dx: 0, dy: 1 }, // Right
+      { dx: -1, dy: 0 }, // Up
+      { dx: 0, dy: -1 }, // Left
+      { dx: 1, dy: 0 } // Down
     ]
     return directions[index]
   }
