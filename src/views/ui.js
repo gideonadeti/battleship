@@ -3,15 +3,22 @@ export default class UI {
   static notification = document.querySelector('.notification')
   static computerBoard = document.querySelector('.computer .game-board')
   static playerBoard = document.querySelector('.player .game-board')
+  static randomizeButton = document.querySelector('.randomize')
+  static boards = document.querySelectorAll('.game-board')
 
   static initialize () {
+    this.clearBoards()
     this.createBoards()
   }
 
-  static createBoards () {
-    const boards = document.querySelectorAll('.game-board')
+  static clearBoards () {
+    this.boards.forEach((board) => {
+      board.innerHTML = ''
+    })
+  }
 
-    boards.forEach((board) => {
+  static createBoards () {
+    this.boards.forEach((board) => {
       // Create column labels
       const columnLabels = [
         '',

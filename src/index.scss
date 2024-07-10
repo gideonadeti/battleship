@@ -90,6 +90,14 @@ main {
           cursor: unset;
         }
 
+        &.computer-ship {
+          &.attacked {
+            background-color: $tertiary !important;
+            border: none;
+            cursor: unset;
+          }
+        }
+
         &.attacked {
           pointer-events: none;
           background-color: $light;
