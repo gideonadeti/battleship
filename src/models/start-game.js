@@ -60,13 +60,14 @@ export default class StartGame {
         this.currentPlayer = 'player'
         UI.updateNotification('Your turn.')
       } else {
-        setTimeout(() => {
-          this.ship = player.gameBoard.board[x][y]
-          this.currentX = x
-          this.currentY = y
-          this.currentIndex = 0
-          this.handleSmartComputerAttack(player, computer)
-        }, this.getDelayTime(true))
+        this.ship = player.gameBoard.board[x][y]
+        this.currentX = x
+        this.currentY = y
+        this.currentIndex = 0
+        setTimeout(
+          () => this.handleSmartComputerAttack(player, computer),
+          this.getDelayTime(true)
+        )
       }
     }
   }
@@ -114,11 +115,17 @@ export default class StartGame {
           }
         } else {
           this.currentIndex = (this.currentIndex + 1) % 4
-          this.handleSmartComputerAttack(player, computer)
+          setTimeout(
+            () => this.handleSmartComputerAttack(player, computer),
+            this.getDelayTime(true)
+          )
         }
       } else {
         this.currentIndex = (this.currentIndex + 1) % 4
-        this.handleSmartComputerAttack(player, computer)
+        setTimeout(
+          () => this.handleSmartComputerAttack(player, computer),
+          this.getDelayTime(true)
+        )
       }
     } else {
       this.handleComputerAttack(player, computer)
@@ -157,18 +164,13 @@ export default class StartGame {
           if (!hit) {
             this.currentPlayer = 'computer'
             UI.updateNotification("Computer's turn, please wait.")
-            if (this.ship) {
-              setTimeout(
-                () =>
-                  this.handleSmartComputerAttack(this.player, this.computer),
-                this.getDelayTime()
-              )
-            } else {
-              setTimeout(
-                () => this.handleComputerAttack(this.player, this.computer),
-                this.getDelayTime()
-              )
-            }
+            setTimeout(
+              () =>
+                this.ship
+                  ? this.handleSmartComputerAttack(this.player, this.computer)
+                  : this.handleComputerAttack(this.player, this.computer),
+              this.getDelayTime()
+            )
           }
         }
       }
