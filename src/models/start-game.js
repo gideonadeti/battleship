@@ -6,9 +6,12 @@ export default class StartGame {
   static computer
   static handlePlayerAttackBound
   static ship
+  static initialX
+  static initialY
   static currentX
   static currentY
   static currentIndex
+  static orientation
 
   // Initialize random starter
   static initialize (player, computer) {
@@ -32,7 +35,7 @@ export default class StartGame {
   }
 
   static getDelayTime (smart = false) {
-    // Min is 500ms, Max is 2000ms
+    // Min is 500ms, Max is 2000ms : Min is 500ms, Max is 1250ms
     return smart ? Math.random() * 1500 + 500 : Math.random() * 750 + 500
   }
 
@@ -61,9 +64,12 @@ export default class StartGame {
         UI.updateNotification('Your turn.')
       } else {
         this.ship = player.gameBoard.board[x][y]
+        this.initialX = x
+        this.initialY = y
         this.currentX = x
         this.currentY = y
         this.currentIndex = 0
+        this.orientation = null
         setTimeout(
           () => this.handleSmartComputerAttack(player, computer),
           this.getDelayTime(true)
@@ -101,6 +107,12 @@ export default class StartGame {
             )
           } else {
             if (hit) {
+              if (direction.dy) {
+                this.orientation = 'horizontal'
+              } else {
+                this.orientation = 'vertical'
+              }
+              console.log(this.orientation)
               this.currentX = adjacentX
               this.currentY = adjacentY
               setTimeout(
@@ -108,24 +120,77 @@ export default class StartGame {
                 this.getDelayTime(true)
               )
             } else {
-              this.currentIndex = (this.currentIndex + 1) % 4
-              this.currentPlayer = 'player'
-              UI.updateNotification('Your turn.')
+              if (this.orientation) {
+                this.currentX = this.initialX
+                this.currentY = this.initialY
+                if (
+                  this.orientation === 'horizontal' &&
+                  this.currentIndex === 0
+                ) {
+                  this.currentIndex = 2
+                  this.currentPlayer = 'player'
+                  UI.updateNotification('Your turn.')
+                } else {
+                  this.currentIndex = 3
+                  this.currentPlayer = 'player'
+                  UI.updateNotification('Your turn.')
+                }
+              } else {
+                this.currentIndex++
+                this.currentPlayer = 'player'
+                UI.updateNotification('Your turn.')
+              }
             }
           }
         } else {
-          this.currentIndex = (this.currentIndex + 1) % 4
+          if (this.orientation) {
+            this.currentX = this.initialX
+            this.currentY = this.initialY
+            if (this.orientation === 'horizontal' && this.currentIndex === 0) {
+              this.currentIndex = 2
+              setTimeout(
+                () => this.handleSmartComputerAttack(player, computer),
+                this.getDelayTime(true)
+              )
+            } else {
+              this.currentIndex = 3
+              setTimeout(
+                () => this.handleSmartComputerAttack(player, computer),
+                this.getDelayTime(true)
+              )
+            }
+          } else {
+            this.currentIndex++
+            setTimeout(
+              () => this.handleSmartComputerAttack(player, computer),
+              this.getDelayTime(true)
+            )
+          }
+        }
+      } else {
+        if (this.orientation) {
+          this.currentX = this.initialX
+          this.currentY = this.initialY
+          if (this.orientation === 'horizontal' && this.currentIndex === 0) {
+            this.currentIndex = 2
+            setTimeout(
+              () => this.handleSmartComputerAttack(player, computer),
+              this.getDelayTime(true)
+            )
+          } else {
+            this.currentIndex = 3
+            setTimeout(
+              () => this.handleSmartComputerAttack(player, computer),
+              this.getDelayTime(true)
+            )
+          }
+        } else {
+          this.currentIndex++
           setTimeout(
             () => this.handleSmartComputerAttack(player, computer),
             this.getDelayTime(true)
           )
         }
-      } else {
-        this.currentIndex = (this.currentIndex + 1) % 4
-        setTimeout(
-          () => this.handleSmartComputerAttack(player, computer),
-          this.getDelayTime(true)
-        )
       }
     } else {
       this.handleComputerAttack(player, computer)
