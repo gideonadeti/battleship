@@ -41,4 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
     playSound('click')
     playGame()
   })
+
+  UI.playAgainButton.addEventListener('click', () => {
+    UI.fadeComputerBoard()
+    UI.updateNotification('Place your ships.')
+    UI.randomizeButton.disabled = false
+    playSound('click')
+    playGame()
+  })
 })

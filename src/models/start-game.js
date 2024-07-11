@@ -121,6 +121,7 @@ export default class StartGame {
 
     if (this.player.gameBoard.areAllShipsSunk()) {
       playSound('lose')
+      UI.showGameOverModal('You lose!')
       UI.updateNotification('You lose!')
       UI.computerBoard.removeEventListener(
         'click',
@@ -210,6 +211,7 @@ export default class StartGame {
 
         if (this.computer.gameBoard.areAllShipsSunk()) {
           playSound('win')
+          UI.showGameOverModal('You won!')
           UI.updateNotification('You won!')
           UI.computerBoard.removeEventListener(
             'click',

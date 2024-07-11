@@ -1,3 +1,5 @@
+import * as bootstrap from 'bootstrap'
+
 export default class UI {
   static startButton = document.querySelector('.start-button')
   static notification = document.querySelector('.notification')
@@ -5,6 +7,18 @@ export default class UI {
   static playerBoard = document.querySelector('.player .game-board')
   static randomizeButton = document.querySelector('.randomize')
   static boards = document.querySelectorAll('.game-board')
+  static gameOverModal = document.querySelector('#game-over-modal')
+  static playAgainButton = this.gameOverModal.querySelector('.play-again')
+
+  static showModal (modal) {
+    const myModal = new bootstrap.Modal(modal)
+    myModal.show()
+  }
+
+  static showGameOverModal (outcome) {
+    this.gameOverModal.querySelector('.outcome').textContent = outcome
+    this.showModal(this.gameOverModal)
+  }
 
   static soundOn () {
     return document.querySelector('#sound-on').checked
@@ -84,6 +98,12 @@ export default class UI {
     this.startButton.style.display = 'none'
     this.computerBoard.style.opacity = 1
     this.computerBoard.style.pointerEvents = 'auto'
+  }
+
+  static fadeComputerBoard () {
+    this.startButton.style.display = 'block'
+    this.computerBoard.style.opacity = 0.25
+    this.computerBoard.style.pointerEvents = 'none'
   }
 
   static updateNotification (text) {
