@@ -15,36 +15,38 @@ export default class StartGame {
   static orientation
   static computerShip
 
-  // Initialize random starter
+  // Initialize the game with random starter
   static initialize (player, computer) {
     this.player = player
     this.computer = computer
     this.currentPlayer = Math.random() > 0.5 ? 'player' : 'computer'
 
-    if (this.currentPlayer === 'player') {
-      playSound('gameStarted')
-      UI.updateNotification('The game started, your turn.')
-    } else {
-      playSound('gameStarted')
-      UI.updateNotification("The game started, computer's turn.")
-      setTimeout(
-        () => this.handleComputerAttack(this.player, this.computer),
-        this.getDelayTime()
-      )
+    playSound('gameStarted')
+    UI.updateNotification(
+      this.currentPlayer === 'player'
+        ? 'The game started, your turn.'
+        : "The game started, computer's turn."
+    )
+
+    if (this.currentPlayer === 'computer') {
+      setTimeout(() => this.handleComputerAttack(), this.getDelayTime())
     }
 
-    // Bind the function once and store the reference
+    // Bind the player attack handler and add event listener
     this.handlePlayerAttackBound = this.handlePlayerAttack.bind(this)
     UI.computerBoard.addEventListener('click', this.handlePlayerAttackBound)
   }
 
+  // Get delay time for the computer's move
   static getDelayTime (smart = false) {
     return smart ? Math.random() * 750 + 500 : Math.random() * 1500 + 500
   }
 
-  static handleComputerAttack (player, computer) {
-    let x, y
-    let cell
+  // Handle computer attack logic
+  static handleComputerAttack () {
+    let x, y, cell
+
+    // Find a random cell that hasn't been attacked
     do {
       x = Math.floor(Math.random() * 10)
       y = Math.floor(Math.random() * 10)
@@ -53,16 +55,71 @@ export default class StartGame {
       )
     } while (cell.classList.contains('attacked'))
 
-    const hit = computer.attack(player, x, y)
+    const hit = this.computer.attack(this.player, x, y)
     UI.fillCell(cell, hit)
+    playSound(hit ? 'wounded' : 'missed')
 
     if (hit) {
-      playSound('wounded')
+      this.prepareSmartAttack(x, y, this.player.gameBoard.board[x][y])
     } else {
-      playSound('missed')
+      this.currentPlayer = 'player'
+      UI.updateNotification('Your turn.')
     }
+  }
 
-    if (player.gameBoard.areAllShipsSunk()) {
+  // Prepare smart attack
+  static prepareSmartAttack (initialX, initialY, playerShip) {
+    this.playerShip = playerShip
+    this.initialX = initialX
+    this.initialY = initialY
+    this.currentX = initialX
+    this.currentY = initialY
+    this.currentIndex = 0
+    this.orientation = null
+
+    setTimeout(() => this.handleSmartComputerAttack(), this.getDelayTime(true))
+  }
+
+  // Handle smart computer attack logic
+  static handleSmartComputerAttack () {
+    if (!this.playerShip.isSunk()) {
+      const { dx, dy } = this.getDirectionVector(this.currentIndex)
+      const adjacentX = this.currentX + dx
+      const adjacentY = this.currentY + dy
+
+      if (this.isValidCell(adjacentX, adjacentY)) {
+        const adjacentCell = document.querySelector(
+          `.player .game-board .cell[data-row="${adjacentX + 1}"][data-col="${
+            adjacentY + 1
+          }"]`
+        )
+        if (!adjacentCell.classList.contains('attacked')) {
+          this.processSmartAttack(adjacentX, adjacentY, adjacentCell)
+        } else {
+          this.updateSmartAttackAfterInvalidMove()
+        }
+      } else {
+        this.updateSmartAttackAfterInvalidMove()
+      }
+    } else {
+      this.handleComputerAttack()
+    }
+  }
+
+  // Validate cell within board bounds
+  static isValidCell (x, y) {
+    return x >= 0 && x < 10 && y >= 0 && y < 10
+  }
+
+  // Process smart attack
+  static processSmartAttack (x, y, cell) {
+    const hit = this.computer.attack(this.player, x, y)
+    UI.fillCell(cell, hit)
+    playSound(
+      hit ? (this.playerShip.isSunk() ? 'killed' : 'wounded') : 'missed'
+    )
+
+    if (this.player.gameBoard.areAllShipsSunk()) {
       playSound('lose')
       UI.updateNotification('You lose!')
       UI.computerBoard.removeEventListener(
@@ -70,150 +127,54 @@ export default class StartGame {
         this.handlePlayerAttackBound
       )
     } else {
-      if (!hit) {
-        this.currentPlayer = 'player'
-        UI.updateNotification('Your turn.')
+      if (hit) {
+        this.updateSmartAttackOnHit(x, y)
       } else {
-        this.playerShip = player.gameBoard.board[x][y]
-        this.initialX = x
-        this.initialY = y
-        this.currentX = x
-        this.currentY = y
-        this.currentIndex = 0
-        this.orientation = null
-        setTimeout(
-          () => this.handleSmartComputerAttack(player, computer),
-          this.getDelayTime(true)
-        )
+        this.updateSmartAttackOnMiss()
       }
     }
   }
 
-  static handleSmartComputerAttack (player, computer) {
-    if (!this.playerShip.isSunk()) {
-      const direction = this.getDirectionVector(this.currentIndex)
-      const adjacentX = this.currentX + direction.dx
-      const adjacentY = this.currentY + direction.dy
+  // Update state on smart attack hit
+  static updateSmartAttackOnHit (x, y) {
+    this.currentX = x
+    this.currentY = y
+    this.orientation =
+      this.orientation || (this.currentIndex % 2 ? 'vertical' : 'horizontal')
 
-      if (
-        adjacentX >= 0 &&
-        adjacentX < 10 &&
-        adjacentY >= 0 &&
-        adjacentY < 10
-      ) {
-        const adjacentCell = document.querySelector(
-          `.player .game-board .cell[data-row="${adjacentX + 1}"][data-col="${
-            adjacentY + 1
-          }"]`
-        )
-        if (!adjacentCell.classList.contains('attacked')) {
-          const hit = computer.attack(player, adjacentX, adjacentY)
-          UI.fillCell(adjacentCell, hit)
+    setTimeout(() => this.handleSmartComputerAttack(), this.getDelayTime(true))
+  }
 
-          if (hit && this.playerShip.isSunk()) {
-            playSound('killed')
-          } else if (hit) {
-            playSound('wounded')
-          } else {
-            playSound('missed')
-          }
-
-          if (player.gameBoard.areAllShipsSunk()) {
-            playSound('lose')
-            UI.updateNotification('You lose!')
-            UI.computerBoard.removeEventListener(
-              'click',
-              this.handlePlayerAttackBound
-            )
-          } else {
-            if (hit) {
-              if (direction.dy) {
-                this.orientation = 'horizontal'
-              } else {
-                this.orientation = 'vertical'
-              }
-              this.currentX = adjacentX
-              this.currentY = adjacentY
-              setTimeout(
-                () => this.handleSmartComputerAttack(player, computer),
-                this.getDelayTime(true)
-              )
-            } else {
-              if (this.orientation) {
-                this.currentX = this.initialX
-                this.currentY = this.initialY
-                if (
-                  this.orientation === 'horizontal' &&
-                  this.currentIndex === 0
-                ) {
-                  this.currentIndex = 2
-                } else {
-                  this.currentIndex = 3
-                }
-                this.currentPlayer = 'player'
-                UI.updateNotification('Your turn.')
-              } else {
-                this.currentIndex++
-                this.currentPlayer = 'player'
-                UI.updateNotification('Your turn.')
-              }
-            }
-          }
-        } else {
-          if (this.orientation) {
-            this.currentX = this.initialX
-            this.currentY = this.initialY
-            if (this.orientation === 'horizontal' && this.currentIndex === 0) {
-              this.currentIndex = 2
-              setTimeout(
-                () => this.handleSmartComputerAttack(player, computer),
-                this.getDelayTime(true)
-              )
-            } else {
-              this.currentIndex = 3
-              setTimeout(
-                () => this.handleSmartComputerAttack(player, computer),
-                this.getDelayTime(true)
-              )
-            }
-          } else {
-            this.currentIndex++
-            setTimeout(
-              () => this.handleSmartComputerAttack(player, computer),
-              this.getDelayTime(true)
-            )
-          }
-        }
-      } else {
-        if (this.orientation) {
-          this.currentX = this.initialX
-          this.currentY = this.initialY
-          if (this.orientation === 'horizontal' && this.currentIndex === 0) {
-            this.currentIndex = 2
-            setTimeout(
-              () => this.handleSmartComputerAttack(player, computer),
-              this.getDelayTime(true)
-            )
-          } else {
-            this.currentIndex = 3
-            setTimeout(
-              () => this.handleSmartComputerAttack(player, computer),
-              this.getDelayTime(true)
-            )
-          }
-        } else {
-          this.currentIndex++
-          setTimeout(
-            () => this.handleSmartComputerAttack(player, computer),
-            this.getDelayTime(true)
-          )
-        }
-      }
+  // Update state on smart attack miss
+  static updateSmartAttackOnMiss () {
+    if (this.orientation) {
+      this.resetSmartAttackToInitial()
     } else {
-      this.handleComputerAttack(player, computer)
+      this.currentIndex++
     }
+    this.currentPlayer = 'player'
+    UI.updateNotification('Your turn.')
   }
 
+  // Reset smart attack to initial coordinates
+  static resetSmartAttackToInitial () {
+    this.currentX = this.initialX
+    this.currentY = this.initialY
+    this.currentIndex = this.orientation === 'horizontal' ? 2 : 3
+  }
+
+  // Update smart attack after invalid move
+  static updateSmartAttackAfterInvalidMove () {
+    if (this.orientation) {
+      this.resetSmartAttackToInitial()
+    } else {
+      this.currentIndex++
+    }
+
+    setTimeout(() => this.handleSmartComputerAttack(), this.getDelayTime(true))
+  }
+
+  // Get direction vector based on index
   static getDirectionVector (index) {
     const directions = [
       { dx: 0, dy: 1 }, // Right
@@ -224,6 +185,7 @@ export default class StartGame {
     return directions[index]
   }
 
+  // Handle player attack logic
   static handlePlayerAttack (event) {
     if (this.currentPlayer === 'player') {
       const cell = event.target
@@ -235,17 +197,16 @@ export default class StartGame {
         const x = parseInt(cell.dataset.row, 10) - 1
         const y = parseInt(cell.dataset.col, 10) - 1
         const hit = this.player.attack(this.computer, x, y)
+
         if (hit) {
           this.computerShip = this.computer.gameBoard.board[x][y]
         }
+
         UI.fillCell(cell, hit)
-        if (hit && this.computerShip.isSunk()) {
-          playSound('killed')
-        } else if (hit) {
-          playSound('wounded')
-        } else {
-          playSound('missed')
-        }
+
+        playSound(
+          hit ? (this.computerShip.isSunk() ? 'killed' : 'wounded') : 'missed'
+        )
 
         if (this.computer.gameBoard.areAllShipsSunk()) {
           playSound('win')
@@ -258,13 +219,11 @@ export default class StartGame {
           if (!hit) {
             this.currentPlayer = 'computer'
             UI.updateNotification("Computer's turn, please wait.")
-            setTimeout(
-              () =>
-                this.playerShip
-                  ? this.handleSmartComputerAttack(this.player, this.computer)
-                  : this.handleComputerAttack(this.player, this.computer),
-              this.getDelayTime()
-            )
+            setTimeout(() => {
+              this.playerShip
+                ? this.handleSmartComputerAttack()
+                : this.handleComputerAttack()
+            }, this.getDelayTime())
           }
         }
       }
