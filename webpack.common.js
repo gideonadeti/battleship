@@ -28,16 +28,9 @@ module.exports = {
       {
         test: /\.(scss)$/,
         use: [
+          'style-loader',
+          'css-loader',
           {
-            // Adds CSS to the DOM by injecting a `<style>` tag
-            loader: 'style-loader'
-          },
-          {
-            // Interprets `@import` and `url()` like `import/require()` and will resolve them
-            loader: 'css-loader'
-          },
-          {
-            // Loader for webpack to process CSS with PostCSS
             loader: 'postcss-loader',
             options: {
               postcssOptions: {
@@ -45,10 +38,7 @@ module.exports = {
               }
             }
           },
-          {
-            // Loads a SASS/SCSS file and compiles it to CSS
-            loader: 'sass-loader'
-          }
+          'sass-loader'
         ]
       },
       {
@@ -57,6 +47,18 @@ module.exports = {
         generator: {
           filename: 'assets/images/[name].[hash][ext]'
         }
+      },
+      {
+        test: /\.(mp3|ogg|wav)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'assets/sounds/'
+            }
+          }
+        ]
       }
     ]
   }

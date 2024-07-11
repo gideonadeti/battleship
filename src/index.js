@@ -1,9 +1,10 @@
-// Import your dependencies and modules
+// Import dependencies and modules
 import './index.scss'
 import * as bootstrap from 'bootstrap'
 import UI from './views/ui'
 import createPlayers from './models/create-players'
 import startGame from './models/start-game'
+import playSound from './models/sounds'
 
 let player, computer
 
@@ -37,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
   playGame()
 
   UI.randomizeButton.addEventListener('click', () => {
+    playSound('click')
     playGame()
   })
 })

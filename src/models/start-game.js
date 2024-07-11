@@ -1,17 +1,19 @@
 import UI from '../views/ui'
+import playSound from './sounds'
 
 export default class StartGame {
   static currentPlayer
   static player
   static computer
   static handlePlayerAttackBound
-  static ship
+  static playerShip
   static initialX
   static initialY
   static currentX
   static currentY
   static currentIndex
   static orientation
+  static computerShip
 
   // Initialize random starter
   static initialize (player, computer) {
@@ -20,8 +22,10 @@ export default class StartGame {
     this.currentPlayer = Math.random() > 0.5 ? 'player' : 'computer'
 
     if (this.currentPlayer === 'player') {
+      playSound('gameStarted')
       UI.updateNotification('The game started, your turn.')
     } else {
+      playSound('gameStarted')
       UI.updateNotification("The game started, computer's turn.")
       setTimeout(
         () => this.handleComputerAttack(this.player, this.computer),
@@ -35,8 +39,7 @@ export default class StartGame {
   }
 
   static getDelayTime (smart = false) {
-    // Min is 500ms, Max is 2000ms : Min is 500ms, Max is 1250ms
-    return smart ? Math.random() * 1500 + 500 : Math.random() * 750 + 500
+    return smart ? Math.random() * 750 + 500 : Math.random() * 1500 + 500
   }
 
   static handleComputerAttack (player, computer) {
@@ -52,7 +55,15 @@ export default class StartGame {
 
     const hit = computer.attack(player, x, y)
     UI.fillCell(cell, hit)
+
+    if (hit) {
+      playSound('wounded')
+    } else {
+      playSound('missed')
+    }
+
     if (player.gameBoard.areAllShipsSunk()) {
+      playSound('lose')
       UI.updateNotification('You lose!')
       UI.computerBoard.removeEventListener(
         'click',
@@ -63,7 +74,7 @@ export default class StartGame {
         this.currentPlayer = 'player'
         UI.updateNotification('Your turn.')
       } else {
-        this.ship = player.gameBoard.board[x][y]
+        this.playerShip = player.gameBoard.board[x][y]
         this.initialX = x
         this.initialY = y
         this.currentX = x
@@ -79,7 +90,7 @@ export default class StartGame {
   }
 
   static handleSmartComputerAttack (player, computer) {
-    if (!this.ship.isSunk()) {
+    if (!this.playerShip.isSunk()) {
       const direction = this.getDirectionVector(this.currentIndex)
       const adjacentX = this.currentX + direction.dx
       const adjacentY = this.currentY + direction.dy
@@ -99,7 +110,16 @@ export default class StartGame {
           const hit = computer.attack(player, adjacentX, adjacentY)
           UI.fillCell(adjacentCell, hit)
 
+          if (hit && this.playerShip.isSunk()) {
+            playSound('killed')
+          } else if (hit) {
+            playSound('wounded')
+          } else {
+            playSound('missed')
+          }
+
           if (player.gameBoard.areAllShipsSunk()) {
+            playSound('lose')
             UI.updateNotification('You lose!')
             UI.computerBoard.removeEventListener(
               'click',
@@ -215,8 +235,20 @@ export default class StartGame {
         const x = parseInt(cell.dataset.row, 10) - 1
         const y = parseInt(cell.dataset.col, 10) - 1
         const hit = this.player.attack(this.computer, x, y)
+        if (hit) {
+          this.computerShip = this.computer.gameBoard.board[x][y]
+        }
         UI.fillCell(cell, hit)
+        if (hit && this.computerShip.isSunk()) {
+          playSound('killed')
+        } else if (hit) {
+          playSound('wounded')
+        } else {
+          playSound('missed')
+        }
+
         if (this.computer.gameBoard.areAllShipsSunk()) {
+          playSound('win')
           UI.updateNotification('You won!')
           UI.computerBoard.removeEventListener(
             'click',
@@ -228,7 +260,7 @@ export default class StartGame {
             UI.updateNotification("Computer's turn, please wait.")
             setTimeout(
               () =>
-                this.ship
+                this.playerShip
                   ? this.handleSmartComputerAttack(this.player, this.computer)
                   : this.handleComputerAttack(this.player, this.computer),
               this.getDelayTime()
