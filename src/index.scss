@@ -30,6 +30,14 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
+.how-to-play-icon {
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: $light;
+  }
+}
+
 main a,
 footer a {
   text-decoration: none;

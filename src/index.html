@@ -37,6 +37,12 @@
           >
             Place your ships.
           </p>
+          <i
+            class="bi bi-info-circle fs-5 how-to-play-icon px-2 py-1 rounded"
+            title="Show how to play"
+            data-bs-toggle="modal"
+            data-bs-target="#how-to-play-modal"
+          ></i>
         </div>
       </nav>
     </header>
@@ -135,6 +141,106 @@
               data-bs-dismiss="modal"
             >
               Play again
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- How to play modal -->
+    <div
+      class="modal fade"
+      id="how-to-play-modal"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="how-to-play-modal"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">
+              How to Play Battleship
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>
+              Welcome to Battleship! Your objective is to sink all of the
+              computer's ships before it sinks yours.
+            </p>
+
+            <p class="fw-bold mt-2">Setup</p>
+            <ol>
+              <li>
+                Both your ships and the computer's are placed randomly on the
+                grid.
+              </li>
+              <li>
+                You can click the "Randomize" button to select a different
+                random ship placement if you don't like the initial one.
+              </li>
+            </ol>
+
+            <p class="fw-bold mt-2">Ships</p>
+            <ul>
+              <li>Carrier (5 spaces)</li>
+              <li>Battleship (4 spaces)</li>
+              <li>Cruiser (3 spaces)</li>
+              <li>Submarine (3 spaces)</li>
+              <li>Destroyer (2 spaces)</li>
+            </ul>
+
+            <p class="fw-bold mt-2">Game Play</p>
+            <ol>
+              <li>
+                You and the computer take turns to attack by selecting a grid
+                coordinate.
+              </li>
+              <li>
+                If a ship is hit, the current player will continue to attack
+                until the next miss, then turns are switched.
+              </li>
+            </ol>
+
+            <p class="fw-bold mt-2">Tips</p>
+            <ul>
+              <li>
+                Use strategy to determine the likely location of the opponent's
+                ships.
+              </li>
+              <li>
+                Pay attention to the pattern of hits and misses to adjust your
+                strategy.
+              </li>
+              <li>
+                The computer can make 'smart' attacks, so don't underestimate
+                it.
+              </li>
+            </ul>
+
+            <p>All the best, but may the computer win! 😂😂😂</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+            >
+              Understood
             </button>
           </div>
         </div>
