@@ -1,3 +1,5 @@
+import UI from '../views/ui'
+
 import clickMP3 from '../assets/sounds/click.mp3'
 import clickOGG from '../assets/sounds/click.ogg'
 import gameStartedMP3 from '../assets/sounds/game_started.mp3'
@@ -54,5 +56,7 @@ export default function playSound (soundName) {
     console.error('Audio format not supported')
     return
   }
-  audio.play()
+  if (UI.soundOn()) {
+    audio.play()
+  }
 }

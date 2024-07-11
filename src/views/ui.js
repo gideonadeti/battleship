@@ -6,6 +6,10 @@ export default class UI {
   static randomizeButton = document.querySelector('.randomize')
   static boards = document.querySelectorAll('.game-board')
 
+  static soundOn () {
+    return document.querySelector('#sound-on').checked
+  }
+
   static initialize () {
     this.clearBoards()
     this.createBoards()
