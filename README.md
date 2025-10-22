@@ -1,6 +1,6 @@
 # Battleship
 
-A web-based version of the classic Battleship game. Players can randomly place their ships on a grid and take turns trying to sink each other’s fleets.
+A web-based implementation of the classic Battleship game, built as part of The Odin Project curriculum to practice Test-Driven Development (TDD) and complex DOM manipulation. Players can randomly place their ships on a grid and take turns trying to sink each other’s fleets.
 
 ## Features
 
