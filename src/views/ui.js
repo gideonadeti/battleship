@@ -1,4 +1,5 @@
 import * as bootstrap from 'bootstrap'
+import { BOARD_SIZE } from '../constants/game-constants'
 
 export default class UI {
   static startButton = document.querySelector('.start-button')
@@ -59,7 +60,7 @@ export default class UI {
       })
 
       // Create rows
-      for (let row = 1; row <= 10; row++) {
+      for (let row = 1; row <= BOARD_SIZE; row++) {
         // Create row label
         const rowLabelDiv = document.createElement('div')
         rowLabelDiv.textContent = row
@@ -67,7 +68,7 @@ export default class UI {
         board.appendChild(rowLabelDiv)
 
         // Create cells for the row
-        for (let col = 1; col <= 10; col++) {
+        for (let col = 1; col <= BOARD_SIZE; col++) {
           const cellDiv = document.createElement('div')
           cellDiv.classList.add('cell')
           cellDiv.dataset.row = row
@@ -81,8 +82,8 @@ export default class UI {
   static renderBoards (players) {
     players.forEach((player) => {
       const board = document.querySelector(`.${player.name} .game-board`)
-      for (let x = 0; x < 10; x++) {
-        for (let y = 0; y < 10; y++) {
+      for (let x = 0; x < BOARD_SIZE; x++) {
+        for (let y = 0; y < BOARD_SIZE; y++) {
           const cell = board.querySelector(
             `.cell[data-row="${x + 1}"][data-col="${y + 1}"]`
           )

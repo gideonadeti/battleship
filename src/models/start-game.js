@@ -1,5 +1,6 @@
 import UI from '../views/ui'
 import playSound from './sounds'
+import { BOARD_SIZE, PLAYERS, ORIENTATIONS } from '../constants/game-constants'
 
 export default class StartGame {
   static currentPlayer
@@ -19,16 +20,16 @@ export default class StartGame {
   static initialize (player, computer) {
     this.player = player
     this.computer = computer
-    this.currentPlayer = Math.random() > 0.5 ? 'player' : 'computer'
+    this.currentPlayer = Math.random() > 0.5 ? PLAYERS.PLAYER : PLAYERS.COMPUTER
 
     playSound('gameStarted')
     UI.updateNotification(
-      this.currentPlayer === 'player'
+      this.currentPlayer === PLAYERS.PLAYER
         ? 'The game started, your turn.'
         : "The game started, computer's turn."
     )
 
-    if (this.currentPlayer === 'computer') {
+    if (this.currentPlayer === PLAYERS.COMPUTER) {
       setTimeout(() => this.handleComputerAttack(), this.getDelayTime())
     }
 
@@ -48,8 +49,8 @@ export default class StartGame {
 
     // Find a random cell that hasn't been attacked
     do {
-      x = Math.floor(Math.random() * 10)
-      y = Math.floor(Math.random() * 10)
+      x = Math.floor(Math.random() * BOARD_SIZE)
+      y = Math.floor(Math.random() * BOARD_SIZE)
       cell = document.querySelector(
         `.player .game-board .cell[data-row="${x + 1}"][data-col="${y + 1}"]`
       )
@@ -62,7 +63,7 @@ export default class StartGame {
     if (hit) {
       this.prepareSmartAttack(x, y, this.player.gameBoard.board[x][y])
     } else {
-      this.currentPlayer = 'player'
+      this.currentPlayer = PLAYERS.PLAYER
       UI.updateNotification('Your turn.')
     }
   }
@@ -108,7 +109,7 @@ export default class StartGame {
 
   // Validate cell within board bounds
   static isValidCell (x, y) {
-    return x >= 0 && x < 10 && y >= 0 && y < 10
+    return x >= 0 && x < BOARD_SIZE && y >= 0 && y < BOARD_SIZE
   }
 
   // Process smart attack
@@ -141,7 +142,7 @@ export default class StartGame {
     this.currentX = x
     this.currentY = y
     this.orientation =
-      this.orientation || (this.currentIndex % 2 ? 'vertical' : 'horizontal')
+      this.orientation || (this.currentIndex % 2 ? ORIENTATIONS.VERTICAL : ORIENTATIONS.HORIZONTAL)
 
     setTimeout(() => this.handleSmartComputerAttack(), this.getDelayTime(true))
   }
@@ -153,7 +154,7 @@ export default class StartGame {
     } else {
       this.currentIndex++
     }
-    this.currentPlayer = 'player'
+    this.currentPlayer = PLAYERS.PLAYER
     UI.updateNotification('Your turn.')
   }
 
@@ -161,7 +162,7 @@ export default class StartGame {
   static resetSmartAttackToInitial () {
     this.currentX = this.initialX
     this.currentY = this.initialY
-    this.currentIndex = this.orientation === 'horizontal' ? 2 : 3
+    this.currentIndex = this.orientation === ORIENTATIONS.HORIZONTAL ? 2 : 3
   }
 
   // Update smart attack after invalid move
@@ -188,7 +189,7 @@ export default class StartGame {
 
   // Handle player attack logic
   static handlePlayerAttack (event) {
-    if (this.currentPlayer === 'player') {
+    if (this.currentPlayer === PLAYERS.PLAYER) {
       const cell = event.target
       if (
         cell.classList.contains('cell') &&
@@ -219,7 +220,7 @@ export default class StartGame {
           )
         } else {
           if (!hit) {
-            this.currentPlayer = 'computer'
+            this.currentPlayer = PLAYERS.COMPUTER
             UI.updateNotification("Computer's turn, please wait.")
             setTimeout(() => {
               this.playerShip

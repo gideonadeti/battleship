@@ -1,8 +1,10 @@
+import { BOARD_SIZE, ORIENTATIONS } from '../constants/game-constants'
+
 export default class GameBoard {
   constructor () {
-    this.board = Array(10)
+    this.board = Array(BOARD_SIZE)
       .fill(null)
-      .map(() => Array(10).fill(null))
+      .map(() => Array(BOARD_SIZE).fill(null))
     this.ships = []
     this.missedAttacks = []
   }
@@ -13,9 +15,9 @@ export default class GameBoard {
     }
 
     for (let i = 0; i < ship.length; i++) {
-      if (orientation === 'horizontal') {
+      if (orientation === ORIENTATIONS.HORIZONTAL) {
         this.board[x][y + i] = ship
-      } else if (orientation === 'vertical') {
+      } else if (orientation === ORIENTATIONS.VERTICAL) {
         this.board[x + i][y] = ship
       }
     }
@@ -29,16 +31,16 @@ export default class GameBoard {
     if (
       x < 0 ||
       y < 0 ||
-      (orientation === 'horizontal' && y + ship.length > 10) ||
-      (orientation === 'vertical' && x + ship.length > 10)
+      (orientation === ORIENTATIONS.HORIZONTAL && y + ship.length > BOARD_SIZE) ||
+      (orientation === ORIENTATIONS.VERTICAL && x + ship.length > BOARD_SIZE)
     ) {
       return false
     }
 
     // Overlap check
     for (let i = 0; i < ship.length; i++) {
-      const checkX = x + (orientation === 'vertical' ? i : 0)
-      const checkY = y + (orientation === 'horizontal' ? i : 0)
+      const checkX = x + (orientation === ORIENTATIONS.VERTICAL ? i : 0)
+      const checkY = y + (orientation === ORIENTATIONS.HORIZONTAL ? i : 0)
 
       if (this.board[checkX][checkY] !== null) {
         return false
@@ -51,9 +53,9 @@ export default class GameBoard {
           const adjY = checkY + dy
           if (
             adjX >= 0 &&
-            adjX < 10 &&
+            adjX < BOARD_SIZE &&
             adjY >= 0 &&
-            adjY < 10 &&
+            adjY < BOARD_SIZE &&
             this.board[adjX][adjY] !== null
           ) {
             return false
