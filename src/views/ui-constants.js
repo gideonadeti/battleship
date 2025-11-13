@@ -20,6 +20,7 @@ export const CSS_CLASSES = {
 
 export const SELECTORS = {
   START_BUTTON: ".start-button",
+  CANCEL_BUTTON: ".cancel-button",
   NOTIFICATION: ".notification",
   COMPUTER_BOARD: ".computer .game-board",
   PLAYER_BOARD: ".player .game-board",
