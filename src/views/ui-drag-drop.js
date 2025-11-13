@@ -19,6 +19,15 @@ export class DragDropHandler {
     };
     this.dragDropEnabled = true;
     this.dragDropListenersSetup = false;
+    // Store event handler references for cleanup
+    this.eventHandlers = {
+      dragstart: null,
+      dragover: null,
+      drop: null,
+      dragend: null,
+      dblclick: null,
+    };
+    this.currentPlayer = null;
   }
 
   /**
@@ -45,6 +54,23 @@ export class DragDropHandler {
   }
 
   /**
+   * Remove all event listeners
+   */
+  removeEventListeners() {
+    if (this.playerBoard) {
+      Object.keys(this.eventHandlers).forEach((eventType) => {
+        if (this.eventHandlers[eventType]) {
+          this.playerBoard.removeEventListener(
+            eventType,
+            this.eventHandlers[eventType]
+          );
+          this.eventHandlers[eventType] = null;
+        }
+      });
+    }
+  }
+
+  /**
    * Setup all drag and drop handlers
    * @param {Object} player - Player object
    * @param {boolean} forceReset - Force reset listeners even if already setup
@@ -52,7 +78,11 @@ export class DragDropHandler {
   setupDragAndDrop(player, forceReset = false) {
     if (!player || (this.dragDropListenersSetup && !forceReset)) return;
 
+    // Remove old listeners before adding new ones
+    this.removeEventListeners();
+
     this.dragDropListenersSetup = true;
+    this.currentPlayer = player;
 
     this.setupDragStartHandler(player);
     this.setupDragOverHandler(player);
@@ -66,14 +96,14 @@ export class DragDropHandler {
    * @param {Object} player - Player object
    */
   setupDragStartHandler(player) {
-    this.playerBoard.addEventListener("dragstart", (e) => {
+    const handler = (e) => {
       if (!this.dragDropEnabled) {
         e.preventDefault();
         return;
       }
 
-      const cell = e.target;
-      if (!cell.classList.contains(CSS_CLASSES.SHIP_CELL)) {
+      const cell = e.target.closest(`.${CSS_CLASSES.CELL}`);
+      if (!cell || !cell.classList.contains(CSS_CLASSES.SHIP_CELL)) {
         return;
       }
 
@@ -103,7 +133,9 @@ export class DragDropHandler {
 
       e.dataTransfer.effectAllowed = "move";
       e.dataTransfer.setData("text/plain", ""); // Required for Firefox
-    });
+    };
+    this.eventHandlers.dragstart = handler;
+    this.playerBoard.addEventListener("dragstart", handler);
   }
 
   /**
@@ -111,7 +143,7 @@ export class DragDropHandler {
    * @param {Object} player - Player object
    */
   setupDragOverHandler(player) {
-    this.playerBoard.addEventListener("dragover", (e) => {
+    const handler = (e) => {
       if (!this.dragDropEnabled || !this.dragState.isDragging) return;
 
       e.preventDefault();
@@ -150,7 +182,9 @@ export class DragDropHandler {
           originalOrientation
         );
       }
-    });
+    };
+    this.eventHandlers.dragover = handler;
+    this.playerBoard.addEventListener("dragover", handler);
   }
 
   /**
@@ -158,7 +192,7 @@ export class DragDropHandler {
    * @param {Object} player - Player object
    */
   setupDropHandler(player) {
-    this.playerBoard.addEventListener("drop", (e) => {
+    const handler = (e) => {
       if (!this.dragDropEnabled || !this.dragState.isDragging) return;
 
       e.preventDefault();
@@ -197,19 +231,23 @@ export class DragDropHandler {
       }
 
       this.resetDragState();
-    });
+    };
+    this.eventHandlers.drop = handler;
+    this.playerBoard.addEventListener("drop", handler);
   }
 
   /**
    * Setup dragend event handler
    */
   setupDragEndHandler() {
-    this.playerBoard.addEventListener("dragend", () => {
+    const handler = () => {
       if (this.dragState.isDragging) {
         this.boardManager.clearPlacementPreview();
         this.resetDragState();
       }
-    });
+    };
+    this.eventHandlers.dragend = handler;
+    this.playerBoard.addEventListener("dragend", handler);
   }
 
   /**
@@ -217,7 +255,7 @@ export class DragDropHandler {
    * @param {Object} player - Player object
    */
   setupDoubleClickHandler(player) {
-    this.playerBoard.addEventListener("dblclick", (e) => {
+    const handler = (e) => {
       if (!this.dragDropEnabled) return;
 
       const cell = e.target.closest(`.${CSS_CLASSES.CELL}`);
@@ -241,7 +279,9 @@ export class DragDropHandler {
           this.setupDragAndDrop(p, forceReset);
         });
       }
-    });
+    };
+    this.eventHandlers.dblclick = handler;
+    this.playerBoard.addEventListener("dblclick", handler);
   }
 
   /**
