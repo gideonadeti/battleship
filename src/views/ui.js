@@ -113,6 +113,38 @@ export default class UI {
     this.enableDragAndDrop();
   }
 
+  static disableCancelButton() {
+    if (this.cancelButton) {
+      this.cancelButton.disabled = true;
+    }
+  }
+
+  static enableRandomizeButton() {
+    if (this.randomizeButton) {
+      this.randomizeButton.disabled = false;
+    }
+  }
+
+  static setRandomizeButtonText(text) {
+    if (this.randomizeButton) {
+      // Set appropriate icon based on text
+      const iconHtml = text === "Randomize" 
+        ? '<i class="bi bi-shuffle"></i>' 
+        : '<i class="bi bi-arrow-repeat"></i>';
+      this.randomizeButton.innerHTML = `${text} ${iconHtml}`;
+    }
+  }
+
+  static resetToSetupState() {
+    // Reset UI to initial setup state
+    this.fadeComputerBoard();
+    this.updateNotification("Place your ships.");
+    if (this.randomizeButton) {
+      this.randomizeButton.disabled = false;
+      this.setRandomizeButtonText("Randomize");
+    }
+  }
+
   static disableDragAndDrop() {
     this.dragDropHandler.setDragDropEnabled(false);
     this.boardManager.setDragDropEnabled(false);
