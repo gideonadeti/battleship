@@ -1,10 +1,10 @@
 import UI from "../views/ui";
 import playSound from "./sounds";
 import GameState from "../game/game-state";
+import ComputerAI from "../ai/computer-ai";
 import {
   BOARD_SIZE,
   PLAYERS,
-  ORIENTATIONS,
   GAME_STATES,
 } from "../constants/game-constants";
 
@@ -14,19 +14,15 @@ export default class StartGame {
   static computer;
   static handlePlayerAttackBound;
   static playerShip;
-  static initialX;
-  static initialY;
-  static currentX;
-  static currentY;
-  static currentIndex;
-  static orientation;
   static computerShip;
+  static computerAI;
 
   // Initialize the game with random starter
   static initialize(player, computer) {
     this.player = player;
     this.computer = computer;
     this.gameState = new GameState();
+    this.computerAI = new ComputerAI();
     const startingPlayer =
       Math.random() > 0.5 ? PLAYERS.PLAYER : PLAYERS.COMPUTER;
     this.gameState.setCurrentPlayer(startingPlayer);
@@ -40,17 +36,12 @@ export default class StartGame {
     );
 
     if (this.gameState.getCurrentPlayer() === PLAYERS.COMPUTER) {
-      setTimeout(() => this.handleComputerAttack(), this.getDelayTime());
+      setTimeout(() => this.handleComputerAttack(), this.computerAI.getDelayTime());
     }
 
     // Bind the player attack handler and add event listener
     this.handlePlayerAttackBound = this.handlePlayerAttack.bind(this);
     UI.computerBoard.addEventListener("click", this.handlePlayerAttackBound);
-  }
-
-  // Get delay time for the computer's move
-  static getDelayTime(smart = false) {
-    return smart ? Math.random() * 750 + 500 : Math.random() * 1500 + 500;
   }
 
   // Handle computer attack logic
@@ -89,14 +80,9 @@ export default class StartGame {
   // Prepare smart attack
   static prepareSmartAttack(initialX, initialY, playerShip) {
     this.playerShip = playerShip;
-    this.initialX = initialX;
-    this.initialY = initialY;
-    this.currentX = initialX;
-    this.currentY = initialY;
-    this.currentIndex = 0;
-    this.orientation = null;
+    this.computerAI.prepareSmartAttack(initialX, initialY, playerShip);
 
-    setTimeout(() => this.handleSmartComputerAttack(), this.getDelayTime(true));
+    setTimeout(() => this.handleSmartComputerAttack(), this.computerAI.getDelayTime(true));
   }
 
   // Handle smart computer attack logic
@@ -109,12 +95,12 @@ export default class StartGame {
       return;
     }
 
-    if (!this.playerShip.isSunk()) {
-      const { dx, dy } = this.getDirectionVector(this.currentIndex);
-      const adjacentX = this.currentX + dx;
-      const adjacentY = this.currentY + dy;
+    if (this.computerAI.targetShip && !this.computerAI.targetShip.isSunk()) {
+      const { dx, dy } = this.computerAI.getDirectionVector(this.computerAI.currentIndex);
+      const adjacentX = this.computerAI.currentX + dx;
+      const adjacentY = this.computerAI.currentY + dy;
 
-      if (this.isValidCell(adjacentX, adjacentY)) {
+      if (this.computerAI.isValidCell(adjacentX, adjacentY)) {
         const adjacentCell = document.querySelector(
           `.player .game-board .cell[data-row="${adjacentX + 1}"][data-col="${
             adjacentY + 1
@@ -133,17 +119,12 @@ export default class StartGame {
     }
   }
 
-  // Validate cell within board bounds
-  static isValidCell(x, y) {
-    return x >= 0 && x < BOARD_SIZE && y >= 0 && y < BOARD_SIZE;
-  }
-
   // Process smart attack
   static processSmartAttack(x, y, cell) {
     const hit = this.computer.attack(this.player, x, y);
     UI.fillCell(cell, hit);
     playSound(
-      hit ? (this.playerShip.isSunk() ? "killed" : "wounded") : "missed"
+      hit ? (this.computerAI.targetShip.isSunk() ? "killed" : "wounded") : "missed"
     );
 
     if (this.player.gameBoard.areAllShipsSunk()) {
@@ -166,53 +147,23 @@ export default class StartGame {
 
   // Update state on smart attack hit
   static updateSmartAttackOnHit(x, y) {
-    this.currentX = x;
-    this.currentY = y;
-    this.orientation =
-      this.orientation ||
-      (this.currentIndex % 2 ? ORIENTATIONS.VERTICAL : ORIENTATIONS.HORIZONTAL);
+    this.computerAI.updateSmartAttackOnHit(x, y);
 
-    setTimeout(() => this.handleSmartComputerAttack(), this.getDelayTime(true));
+    setTimeout(() => this.handleSmartComputerAttack(), this.computerAI.getDelayTime(true));
   }
 
   // Update state on smart attack miss
   static updateSmartAttackOnMiss() {
-    if (this.orientation) {
-      this.resetSmartAttackToInitial();
-    } else {
-      this.currentIndex++;
-    }
+    this.computerAI.updateSmartAttackOnMiss();
     this.gameState.setCurrentPlayer(PLAYERS.PLAYER);
     UI.updateNotification("Your turn.");
   }
 
-  // Reset smart attack to initial coordinates
-  static resetSmartAttackToInitial() {
-    this.currentX = this.initialX;
-    this.currentY = this.initialY;
-    this.currentIndex = this.orientation === ORIENTATIONS.HORIZONTAL ? 2 : 3;
-  }
-
   // Update smart attack after invalid move
   static updateSmartAttackAfterInvalidMove() {
-    if (this.orientation) {
-      this.resetSmartAttackToInitial();
-    } else {
-      this.currentIndex++;
-    }
+    this.computerAI.updateSmartAttackAfterInvalidMove();
 
-    setTimeout(() => this.handleSmartComputerAttack(), this.getDelayTime(true));
-  }
-
-  // Get direction vector based on index
-  static getDirectionVector(index) {
-    const directions = [
-      { dx: 0, dy: 1 }, // Right
-      { dx: -1, dy: 0 }, // Up
-      { dx: 0, dy: -1 }, // Left
-      { dx: 1, dy: 0 }, // Down
-    ];
-    return directions[index];
+    setTimeout(() => this.handleSmartComputerAttack(), this.computerAI.getDelayTime(true));
   }
 
   // Handle player attack logic
@@ -262,7 +213,7 @@ export default class StartGame {
             this.playerShip
               ? this.handleSmartComputerAttack()
               : this.handleComputerAttack();
-          }, this.getDelayTime());
+          }, this.computerAI.getDelayTime());
         }
       }
     }
