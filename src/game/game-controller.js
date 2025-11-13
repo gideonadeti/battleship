@@ -84,6 +84,15 @@ export default class GameController {
       : "missed";
     playSound(sound);
 
+    // Mark verified empty cells if ship is sunk
+    if (hit && this.computerShip && this.computerShip.isSunk()) {
+      this.markVerifiedEmptyCellsForSunkShip(
+        this.computerShip,
+        this.computer.gameBoard,
+        UI.computerBoard
+      );
+    }
+
     // Check if all computer ships are sunk
     if (this.computer.gameBoard.areAllShipsSunk()) {
       this.endGame(PLAYERS.PLAYER);
@@ -137,15 +146,45 @@ export default class GameController {
     }
 
     let x, y, cell;
+    let attempts = 0;
+    const maxAttempts = BOARD_SIZE * BOARD_SIZE;
 
-    // Find a random cell that hasn't been attacked
+    // Find a random cell that hasn't been attacked and isn't verified empty
     do {
       x = Math.floor(Math.random() * BOARD_SIZE);
       y = Math.floor(Math.random() * BOARD_SIZE);
       cell = document.querySelector(
         `.player .game-board .cell[data-row="${x + 1}"][data-col="${y + 1}"]`
       );
-    } while (!cell || cell.classList.contains("attacked"));
+      attempts++;
+      // Prevent infinite loop
+      if (attempts > maxAttempts) {
+        // Fallback: find any unattacked cell
+        for (let i = 0; i < BOARD_SIZE; i++) {
+          for (let j = 0; j < BOARD_SIZE; j++) {
+            const fallbackCell = document.querySelector(
+              `.player .game-board .cell[data-row="${i + 1}"][data-col="${j + 1}"]`
+            );
+            if (
+              fallbackCell &&
+              !fallbackCell.classList.contains("attacked") &&
+              !this.player.gameBoard.isVerifiedEmpty(i, j)
+            ) {
+              x = i;
+              y = j;
+              cell = fallbackCell;
+              break;
+            }
+          }
+          if (cell && !cell.classList.contains("attacked")) break;
+        }
+        break;
+      }
+    } while (
+      !cell ||
+      cell.classList.contains("attacked") ||
+      this.player.gameBoard.isVerifiedEmpty(x, y)
+    );
 
     // Safety check: if cell is still null, something is wrong with the DOM
     if (!cell) {
@@ -204,7 +243,11 @@ export default class GameController {
           adjacentY + 1
         }"]`
       );
-      if (adjacentCell && !adjacentCell.classList.contains("attacked")) {
+      if (
+        adjacentCell &&
+        !adjacentCell.classList.contains("attacked") &&
+        !this.player.gameBoard.isVerifiedEmpty(adjacentX, adjacentY)
+      ) {
         this.processSmartAttack(adjacentX, adjacentY, adjacentCell);
       } else {
         this.updateSmartAttackAfterInvalidMove();
@@ -227,6 +270,15 @@ export default class GameController {
           : "wounded"
         : "missed"
     );
+
+    // Mark verified empty cells if ship is sunk (internal tracking only)
+    if (hit && this.computerAI.targetShip && this.computerAI.targetShip.isSunk()) {
+      this.markVerifiedEmptyCellsForSunkShip(
+        this.computerAI.targetShip,
+        this.player.gameBoard,
+        null // Don't visually mark player board
+      );
+    }
 
     if (this.player.gameBoard.areAllShipsSunk()) {
       this.endGame(PLAYERS.COMPUTER);
@@ -310,6 +362,36 @@ export default class GameController {
     this.computerAI.reset();
     this.computerShip = null;
     this.playerShip = null;
+  }
+
+  /**
+   * Mark verified empty cells around a sunk ship
+   * @param {Object} ship - The sunk ship
+   * @param {GameBoard} gameBoard - The game board
+   * @param {HTMLElement|null} boardElement - The board DOM element (null for player board, computer board for visual marking)
+   */
+  markVerifiedEmptyCellsForSunkShip(ship, gameBoard, boardElement) {
+    const position = gameBoard.getShipPosition(ship);
+    if (!position) {
+      return;
+    }
+
+    const { x, y, orientation } = position;
+    const length = ship.length;
+
+    // Track verified empty cells internally
+    gameBoard.markVerifiedEmptyCells(x, y, orientation, length);
+
+    // Visually mark on computer board only (if checkbox is enabled)
+    if (boardElement && UI.isMarkVerifiedEnabled()) {
+      const adjacentCells = gameBoard.getAdjacentCells(x, y, orientation, length);
+      for (const cell of adjacentCells) {
+        // Only mark if not already attacked
+        if (!gameBoard.missedAttacks.find((c) => c[0] === cell.x && c[1] === cell.y)) {
+          UI.markVerifiedEmptyCell(cell.x, cell.y, boardElement);
+        }
+      }
+    }
   }
 
   /**
