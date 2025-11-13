@@ -341,7 +341,29 @@ export default class GameController {
 
     playSound(sound);
     UI.showGameOverModal(outcome);
-    UI.updateNotification(outcome);
+    UI.updateNotification(`${outcome} Click "New Game" to play again.`);
+    
+    // Disable and hide cancel button when game ends
+    UI.disableCancelButton();
+    if (UI.cancelButton) {
+      UI.cancelButton.style.display = "none";
+    }
+    
+    // Re-enable Randomize button and change text to "New Game" to make it clear
+    UI.enableRandomizeButton();
+    UI.setRandomizeButtonText("New Game");
+    
+    // Show start button again and fade computer board for new game setup
+    if (UI.startButton) {
+      UI.startButton.style.display = "block";
+    }
+    // Fade computer board but keep it visible so players can see final state
+    if (UI.computerBoard) {
+      UI.computerBoard.style.opacity = 0.25;
+      UI.computerBoard.style.pointerEvents = "none";
+    }
+    
+    // The board is already non-interactive since we removed the click event listener above
   }
 
   /**
