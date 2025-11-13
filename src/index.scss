@@ -98,6 +98,29 @@ main {
           cursor: unset;
         }
 
+        &.ship-cell {
+          cursor: grab;
+
+          &:active {
+            cursor: grabbing;
+          }
+
+          &.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+          }
+        }
+
+        &.valid-drop {
+          background-color: rgba(25, 135, 84, 0.3) !important;
+          border: 2px solid rgba(25, 135, 84, 0.8) !important;
+        }
+
+        &.invalid-drop {
+          background-color: rgba(220, 53, 69, 0.3) !important;
+          border: 2px solid rgba(220, 53, 69, 0.8) !important;
+        }
+
         &.computer-ship {
           &.attacked {
             background-color: $tertiary !important;
