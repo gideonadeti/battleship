@@ -55,8 +55,12 @@ export default class UI {
   // ==================== Board Rendering Methods ====================
 
   static renderBoards(players) {
+    // Enable drag and drop when rendering boards initially
+    this.enableDragAndDrop();
+    // Reset listeners setup to ensure they get set up
+    this.dragDropHandler.resetListenersSetup();
     const setupDragAndDrop = (player) => {
-      this.dragDropHandler.setupDragAndDrop(player);
+      this.dragDropHandler.setupDragAndDrop(player, true);
     };
     this.boardManager.renderBoards(players, setupDragAndDrop);
   }
