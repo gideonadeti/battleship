@@ -134,6 +134,15 @@ main {
           background-color: $light;
           cursor: unset;
         }
+
+        &.verified-empty {
+          background-color: rgba(173, 216, 230, 0.3) !important;
+          border: 1px dashed rgba(0, 123, 255, 0.5);
+          
+          .content {
+            color: rgba(0, 123, 255, 0.7);
+          }
+        }
       }
     }
 
