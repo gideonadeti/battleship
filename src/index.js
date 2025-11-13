@@ -3,10 +3,11 @@ import './index.scss'
 import * as bootstrap from 'bootstrap'
 import UI from './views/ui'
 import createPlayers from './models/create-players'
-import startGame from './models/start-game'
+import GameController from './game/game-controller'
 import playSound from './models/sounds'
 
 let player, computer
+let gameController = null
 
 function playGame () {
   UI.initialize();
@@ -16,9 +17,18 @@ function playGame () {
 
   UI.renderBoards([player, computer])
 
+  // Cleanup previous game controller if it exists
+  if (gameController) {
+    gameController.cleanup()
+    gameController = null
+  }
+
   function startGameHandler () {
     UI.showComputerBoard()
-    startGame.initialize(player, computer)
+    
+    // Create new game controller instance
+    gameController = new GameController(player, computer)
+    gameController.initialize()
 
     UI.randomizeButton.disabled = true
   }
