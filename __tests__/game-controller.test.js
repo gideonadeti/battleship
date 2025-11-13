@@ -3,14 +3,9 @@ import GameState from "../src/game/game-state";
 import ComputerAI from "../src/ai/computer-ai";
 import Player from "../src/models/player";
 import Ship from "../src/models/ship";
-import GameBoard from "../src/models/game-board";
-import {
-  GAME_STATES,
-  PLAYERS,
-  BOARD_SIZE,
-} from "../src/constants/game-constants";
+import { GAME_STATES, PLAYERS } from "../src/constants/game-constants";
 import { ORIENTATIONS } from "../src/constants/game-constants";
-import { createCellElement, createMockElement } from "./helpers/dom-helpers";
+import { createCellElement } from "./helpers/dom-helpers";
 
 // Mock dependencies
 jest.mock("../src/models/sounds", () => ({
