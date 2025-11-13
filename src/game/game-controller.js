@@ -178,7 +178,9 @@ export default class GameController {
     if (!this.computerAI.targetShip || this.computerAI.targetShip.isSunk()) {
       // Ship sunk, go back to random attacks
       this.computerAI.resetSmartAttack();
-      this.executeComputerAttack();
+      this.playerShip = null;
+      // Schedule a new random attack with delay
+      this.scheduleComputerAttack();
       return;
     }
 
