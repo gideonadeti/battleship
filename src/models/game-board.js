@@ -9,6 +9,8 @@ export default class GameBoard {
     this.missedAttacks = []
     // Track ship positions and orientations for drag/rotate operations
     this.shipPositions = new Map() // Map<Ship, {x, y, orientation}>
+    // Track verified empty cells (cells adjacent to sunk ships)
+    this.verifiedEmptyCells = [] // Array of [x, y] coordinates
   }
 
   placeShip (ship, x, y, orientation) {
@@ -174,5 +176,106 @@ export default class GameBoard {
     // If all attempts fail, restore original position
     // (ship is still in original position since we didn't remove it)
     return false
+  }
+
+  /**
+   * Get all adjacent cells around a ship position
+   * @param {number} x - Starting x coordinate
+   * @param {number} y - Starting y coordinate
+   * @param {string} orientation - Ship orientation
+   * @param {number} length - Ship length
+   * @returns {Array} Array of {x, y} coordinate objects
+   */
+  getAdjacentCells (x, y, orientation, length) {
+    const adjacentCells = []
+    const shipCells = new Set()
+
+    // Collect all ship cell coordinates
+    for (let i = 0; i < length; i++) {
+      const shipX = orientation === ORIENTATIONS.VERTICAL ? x + i : x
+      const shipY = orientation === ORIENTATIONS.HORIZONTAL ? y + i : y
+      shipCells.add(`${shipX},${shipY}`)
+    }
+
+    // For each ship cell, check all 8 surrounding cells
+    for (let i = 0; i < length; i++) {
+      const shipX = orientation === ORIENTATIONS.VERTICAL ? x + i : x
+      const shipY = orientation === ORIENTATIONS.HORIZONTAL ? y + i : y
+
+      // Check all 8 adjacent cells
+      for (let dx = -1; dx <= 1; dx++) {
+        for (let dy = -1; dy <= 1; dy++) {
+          const adjX = shipX + dx
+          const adjY = shipY + dy
+
+          // Skip if out of bounds
+          if (
+            adjX < 0 ||
+            adjX >= BOARD_SIZE ||
+            adjY < 0 ||
+            adjY >= BOARD_SIZE
+          ) {
+            continue
+          }
+
+          // Skip if it's part of the ship itself
+          if (shipCells.has(`${adjX},${adjY}`)) {
+            continue
+          }
+
+          // Add to adjacent cells if not already added
+          const cellKey = `${adjX},${adjY}`
+          if (!adjacentCells.find((cell) => `${cell.x},${cell.y}` === cellKey)) {
+            adjacentCells.push({ x: adjX, y: adjY })
+          }
+        }
+      }
+    }
+
+    return adjacentCells
+  }
+
+  /**
+   * Mark adjacent cells around a ship as verified empty
+   * @param {number} x - Starting x coordinate
+   * @param {number} y - Starting y coordinate
+   * @param {string} orientation - Ship orientation
+   * @param {number} length - Ship length
+   */
+  markVerifiedEmptyCells (x, y, orientation, length) {
+    const adjacentCells = this.getAdjacentCells(x, y, orientation, length)
+
+    for (const cell of adjacentCells) {
+      const cellKey = [cell.x, cell.y]
+      // Only mark if not already marked and not already attacked
+      if (
+        !this.verifiedEmptyCells.find(
+          (c) => c[0] === cell.x && c[1] === cell.y
+        ) &&
+        !this.missedAttacks.find(
+          (c) => c[0] === cell.x && c[1] === cell.y
+        )
+      ) {
+        this.verifiedEmptyCells.push(cellKey)
+      }
+    }
+  }
+
+  /**
+   * Check if a cell is verified empty
+   * @param {number} x - X coordinate
+   * @param {number} y - Y coordinate
+   * @returns {boolean} True if the cell is verified empty
+   */
+  isVerifiedEmpty (x, y) {
+    return this.verifiedEmptyCells.some((cell) => cell[0] === x && cell[1] === y)
+  }
+
+  /**
+   * Get all verified empty cells
+   * @returns {Array} Array of [x, y] coordinates
+   */
+  getVerifiedEmptyCells () {
+    return [...this.verifiedEmptyCells]
   }
 }
