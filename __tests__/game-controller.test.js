@@ -1,3 +1,5 @@
+import { createCellElement } from "./helpers/dom-helpers";
+import { placeShipOnPlayer } from "./helpers/game-fixtures";
 import GameController from "../src/game/game-controller";
 import GameState from "../src/game/game-state";
 import ComputerAI from "../src/ai/computer-ai";
@@ -5,7 +7,6 @@ import Player from "../src/models/player";
 import Ship from "../src/models/ship";
 import { GAME_STATES, PLAYERS } from "../src/constants/game-constants";
 import { ORIENTATIONS } from "../src/constants/game-constants";
-import { createCellElement } from "./helpers/dom-helpers";
 
 // Mock dependencies
 jest.mock("../src/models/sounds", () => ({
@@ -185,8 +186,7 @@ describe("GameController", () => {
     });
 
     test("should attack valid cell and fill it", () => {
-      const ship = new Ship(2);
-      computer.gameBoard.placeShip(ship, 0, 0, ORIENTATIONS.HORIZONTAL);
+      placeShipOnPlayer(computer, 0, 0, ORIENTATIONS.HORIZONTAL, 2);
 
       const mockCell = createCellElement(1, 1);
       const mockEvent = { target: mockCell };
@@ -199,8 +199,7 @@ describe("GameController", () => {
     });
 
     test("should play wounded sound on hit", () => {
-      const ship = new Ship(2);
-      computer.gameBoard.placeShip(ship, 0, 0, ORIENTATIONS.HORIZONTAL);
+      placeShipOnPlayer(computer, 0, 0, ORIENTATIONS.HORIZONTAL, 2);
 
       const mockCell = createCellElement(1, 1);
       const mockEvent = { target: mockCell };
@@ -212,8 +211,7 @@ describe("GameController", () => {
     });
 
     test("should play killed sound when ship is sunk", () => {
-      const ship = new Ship(1);
-      computer.gameBoard.placeShip(ship, 0, 0, ORIENTATIONS.HORIZONTAL);
+      placeShipOnPlayer(computer, 0, 0, ORIENTATIONS.HORIZONTAL, 1);
 
       const mockCell = createCellElement(1, 1);
       const mockEvent = { target: mockCell };
@@ -228,8 +226,7 @@ describe("GameController", () => {
     test("should play missed sound on miss", () => {
       // Place a ship that won't be sunk, so areAllShipsSunk() returns false
       // This ensures the code doesn't return early from the areAllShipsSunk() check
-      const ship = new Ship(2);
-      computer.gameBoard.placeShip(ship, 5, 5, ORIENTATIONS.HORIZONTAL);
+      placeShipOnPlayer(computer, 5, 5, ORIENTATIONS.HORIZONTAL, 2);
 
       // Ensure computer board is empty at (0, 0) - no ship placed there
       expect(computer.gameBoard.board[0][0]).toBeNull();
@@ -260,8 +257,7 @@ describe("GameController", () => {
 
     test("should end game if all computer ships are sunk", () => {
       // Place a ship - when we hit it, it will sink and end the game
-      const ship = new Ship(1);
-      computer.gameBoard.placeShip(ship, 0, 0, ORIENTATIONS.HORIZONTAL);
+      placeShipOnPlayer(computer, 0, 0, ORIENTATIONS.HORIZONTAL, 1);
 
       const mockCell = createCellElement(1, 1);
       const mockEvent = { target: mockCell };
@@ -274,8 +270,7 @@ describe("GameController", () => {
     });
 
     test("should continue player turn on hit", () => {
-      const ship = new Ship(2);
-      computer.gameBoard.placeShip(ship, 0, 0, ORIENTATIONS.HORIZONTAL);
+      placeShipOnPlayer(computer, 0, 0, ORIENTATIONS.HORIZONTAL, 2);
 
       const mockCell = createCellElement(1, 1);
       const mockEvent = { target: mockCell };
@@ -397,8 +392,7 @@ describe("GameController", () => {
     });
 
     test("should prepare smart attack on hit", () => {
-      const ship = new Ship(2);
-      player.gameBoard.placeShip(ship, 0, 0, ORIENTATIONS.HORIZONTAL);
+      placeShipOnPlayer(player, 0, 0, ORIENTATIONS.HORIZONTAL, 2);
 
       // Mock document.querySelector to return cell for coordinates 0,0
       const mockCell = createCellElement(1, 1);
@@ -561,8 +555,7 @@ describe("GameController", () => {
 
     test("should end game if all player ships are sunk", () => {
       // Place and sink all ships
-      const ship = new Ship(1);
-      player.gameBoard.placeShip(ship, 0, 1, ORIENTATIONS.HORIZONTAL);
+      const ship = placeShipOnPlayer(player, 0, 1, ORIENTATIONS.HORIZONTAL, 1);
       ship.hit();
 
       const mockCell = createCellElement(1, 1);
@@ -576,8 +569,7 @@ describe("GameController", () => {
 
     test("should update smart attack on hit", () => {
       // Place a ship that won't be sunk, so areAllShipsSunk() returns false
-      const ship = new Ship(2);
-      player.gameBoard.placeShip(ship, 5, 5, ORIENTATIONS.HORIZONTAL);
+      placeShipOnPlayer(player, 5, 5, ORIENTATIONS.HORIZONTAL, 2);
 
       const mockCell = createCellElement(1, 1);
       jest.spyOn(computer, "attack").mockReturnValue(true);
@@ -594,8 +586,7 @@ describe("GameController", () => {
 
     test("should update smart attack on miss", () => {
       // Place a ship that won't be sunk, so areAllShipsSunk() returns false
-      const ship = new Ship(2);
-      player.gameBoard.placeShip(ship, 5, 5, ORIENTATIONS.HORIZONTAL);
+      placeShipOnPlayer(player, 5, 5, ORIENTATIONS.HORIZONTAL, 2);
 
       const mockCell = createCellElement(1, 1);
       jest.spyOn(computer, "attack").mockReturnValue(false);
