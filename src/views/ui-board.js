@@ -220,6 +220,30 @@ export class BoardManager {
   }
 
   /**
+   * Mark a verified empty cell on the computer board
+   * @param {number} x - X coordinate (0-indexed)
+   * @param {number} y - Y coordinate (0-indexed)
+   * @param {HTMLElement} boardElement - The board DOM element
+   */
+  markVerifiedEmptyCell(x, y, boardElement) {
+    const cell = CoordinateUtils.getCellFromCoordinates(x, y, boardElement);
+    if (!cell || cell.classList.contains(CSS_CLASSES.ATTACKED)) {
+      return; // Don't mark if cell doesn't exist or already attacked
+    }
+
+    // Add verified empty class
+    cell.classList.add(CSS_CLASSES.VERIFIED_EMPTY);
+
+    // Add "O" indicator if not already present
+    if (!cell.querySelector(`.${CSS_CLASSES.CONTENT}`)) {
+      const content = document.createElement("p");
+      content.classList.add(CSS_CLASSES.CONTENT);
+      content.textContent = "O";
+      cell.appendChild(content);
+    }
+  }
+
+  /**
    * Highlight valid placement preview
    * @param {number} x - X coordinate
    * @param {number} y - Y coordinate

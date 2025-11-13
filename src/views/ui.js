@@ -44,6 +44,10 @@ export default class UI {
     return document.querySelector(SELECTORS.SOUND_ON).checked;
   }
 
+  static isMarkVerifiedEnabled() {
+    return document.querySelector(SELECTORS.MARK_VERIFIED)?.checked || false;
+  }
+
   // ==================== Initialization Methods ====================
 
   static initialize() {
@@ -74,6 +78,10 @@ export default class UI {
 
   static fillCell(cell, hit) {
     this.boardManager.fillCell(cell, hit);
+  }
+
+  static markVerifiedEmptyCell(x, y, boardElement) {
+    this.boardManager.markVerifiedEmptyCell(x, y, boardElement);
   }
 
   // ==================== Game State Methods ====================

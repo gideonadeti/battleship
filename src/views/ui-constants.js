@@ -15,6 +15,7 @@ export const CSS_CLASSES = {
   PLAYER_SHIP: "player-ship",
   TEXT_DANGER: "text-danger",
   TEXT_PRIMARY: "text-primary",
+  VERIFIED_EMPTY: "verified-empty",
 };
 
 export const SELECTORS = {
@@ -27,6 +28,7 @@ export const SELECTORS = {
   GAME_OVER_MODAL: "#game-over-modal",
   PLAY_AGAIN: ".play-again",
   SOUND_ON: "#sound-on",
+  MARK_VERIFIED: "#mark-verified",
   OUTCOME: ".outcome",
 };
 
