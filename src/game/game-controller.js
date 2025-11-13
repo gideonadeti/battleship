@@ -386,8 +386,11 @@ export default class GameController {
     if (boardElement && UI.isMarkVerifiedEnabled()) {
       const adjacentCells = gameBoard.getAdjacentCells(x, y, orientation, length);
       for (const cell of adjacentCells) {
-        // Only mark if not already attacked
-        if (!gameBoard.missedAttacks.find((c) => c[0] === cell.x && c[1] === cell.y)) {
+        // Check if cell has been missed (markVerifiedEmptyCell will also check for attacked class)
+        const isMissed = gameBoard.missedAttacks.find((c) => c[0] === cell.x && c[1] === cell.y);
+        
+        // Only mark if not already missed (markVerifiedEmptyCell will check for attacked class to handle hits)
+        if (!isMissed) {
           UI.markVerifiedEmptyCell(cell.x, cell.y, boardElement);
         }
       }
