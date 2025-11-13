@@ -10,6 +10,7 @@ import {
   BOARD_SIZE,
 } from "../src/constants/game-constants";
 import { ORIENTATIONS } from "../src/constants/game-constants";
+import { createCellElement, createMockElement } from "./helpers/dom-helpers";
 
 // Mock dependencies
 jest.mock("../src/models/sounds", () => ({
@@ -48,10 +49,7 @@ describe("GameController", () => {
     computer = new Player(PLAYERS.COMPUTER);
 
     // Mock document.querySelector for DOM operations
-    const mockCell = document.createElement("div");
-    mockCell.classList.add("cell");
-    mockCell.dataset.row = "1";
-    mockCell.dataset.col = "1";
+    const mockCell = createCellElement(1, 1);
     document.querySelector = jest.fn(() => mockCell);
 
     gameController = new GameController(player, computer);
@@ -172,10 +170,7 @@ describe("GameController", () => {
     });
 
     test("should not attack if cell is already attacked", () => {
-      const mockCell = document.createElement("div");
-      mockCell.classList.add("cell", "attacked");
-      mockCell.dataset.row = "1";
-      mockCell.dataset.col = "1";
+      const mockCell = createCellElement(1, 1, ["attacked"]);
       const mockEvent = { target: mockCell };
       jest.spyOn(player, "attack");
 
@@ -185,10 +180,7 @@ describe("GameController", () => {
     });
 
     test("should not attack if target is label", () => {
-      const mockCell = document.createElement("div");
-      mockCell.classList.add("cell", "label");
-      mockCell.dataset.row = "1";
-      mockCell.dataset.col = "1";
+      const mockCell = createCellElement(1, 1, ["label"]);
       const mockEvent = { target: mockCell };
       jest.spyOn(player, "attack");
 
@@ -201,10 +193,7 @@ describe("GameController", () => {
       const ship = new Ship(2);
       computer.gameBoard.placeShip(ship, 0, 0, ORIENTATIONS.HORIZONTAL);
 
-      const mockCell = document.createElement("div");
-      mockCell.classList.add("cell");
-      mockCell.dataset.row = "1";
-      mockCell.dataset.col = "1";
+      const mockCell = createCellElement(1, 1);
       const mockEvent = { target: mockCell };
       jest.spyOn(player, "attack");
 
@@ -218,10 +207,7 @@ describe("GameController", () => {
       const ship = new Ship(2);
       computer.gameBoard.placeShip(ship, 0, 0, ORIENTATIONS.HORIZONTAL);
 
-      const mockCell = document.createElement("div");
-      mockCell.classList.add("cell");
-      mockCell.dataset.row = "1";
-      mockCell.dataset.col = "1";
+      const mockCell = createCellElement(1, 1);
       const mockEvent = { target: mockCell };
       // Don't mock - let it actually hit (ship has length 2, so first hit won't sink it)
 
@@ -234,10 +220,7 @@ describe("GameController", () => {
       const ship = new Ship(1);
       computer.gameBoard.placeShip(ship, 0, 0, ORIENTATIONS.HORIZONTAL);
 
-      const mockCell = document.createElement("div");
-      mockCell.classList.add("cell");
-      mockCell.dataset.row = "1";
-      mockCell.dataset.col = "1";
+      const mockCell = createCellElement(1, 1);
       const mockEvent = { target: mockCell };
       // Don't mock player.attack - let it actually hit the ship
       // For a length 1 ship, one hit will sink it
@@ -256,10 +239,7 @@ describe("GameController", () => {
       // Ensure computer board is empty at (0, 0) - no ship placed there
       expect(computer.gameBoard.board[0][0]).toBeNull();
 
-      const mockCell = document.createElement("div");
-      mockCell.classList.add("cell");
-      mockCell.dataset.row = "1";
-      mockCell.dataset.col = "1";
+      const mockCell = createCellElement(1, 1);
       const mockEvent = { target: mockCell };
       jest.spyOn(gameController, "scheduleComputerAttack");
       jest.spyOn(player, "attack").mockReturnValue(false); // Explicitly mock to return false (miss)
@@ -288,10 +268,7 @@ describe("GameController", () => {
       const ship = new Ship(1);
       computer.gameBoard.placeShip(ship, 0, 0, ORIENTATIONS.HORIZONTAL);
 
-      const mockCell = document.createElement("div");
-      mockCell.classList.add("cell");
-      mockCell.dataset.row = "1";
-      mockCell.dataset.col = "1";
+      const mockCell = createCellElement(1, 1);
       const mockEvent = { target: mockCell };
       jest.spyOn(gameController, "endGame");
       // Don't mock player.attack - let it actually hit and sink the ship
@@ -305,10 +282,7 @@ describe("GameController", () => {
       const ship = new Ship(2);
       computer.gameBoard.placeShip(ship, 0, 0, ORIENTATIONS.HORIZONTAL);
 
-      const mockCell = document.createElement("div");
-      mockCell.classList.add("cell");
-      mockCell.dataset.row = "1";
-      mockCell.dataset.col = "1";
+      const mockCell = createCellElement(1, 1);
       const mockEvent = { target: mockCell };
       // Don't mock - let it actually hit (ship won't be sunk on first hit)
 
@@ -396,10 +370,7 @@ describe("GameController", () => {
 
     test("should find and attack a random cell", () => {
       // Mock document.querySelector to return a valid cell for any coordinates
-      const mockCell = document.createElement("div");
-      mockCell.classList.add("cell");
-      mockCell.dataset.row = "1";
-      mockCell.dataset.col = "1";
+      const mockCell = createCellElement(1, 1);
       document.querySelector = jest.fn(() => mockCell);
 
       jest.spyOn(computer, "attack").mockReturnValue(false);
@@ -411,8 +382,7 @@ describe("GameController", () => {
     });
 
     test("should fill cell after attack", () => {
-      const mockCell = document.createElement("div");
-      mockCell.classList.add("cell");
+      const mockCell = createCellElement(1, 1);
       document.querySelector = jest.fn(() => mockCell);
       jest.spyOn(computer, "attack").mockReturnValue(false);
 
@@ -422,8 +392,7 @@ describe("GameController", () => {
     });
 
     test("should play sound on attack", () => {
-      const mockCell = document.createElement("div");
-      mockCell.classList.add("cell");
+      const mockCell = createCellElement(1, 1);
       document.querySelector = jest.fn(() => mockCell);
       jest.spyOn(computer, "attack").mockReturnValue(false);
 
@@ -437,10 +406,7 @@ describe("GameController", () => {
       player.gameBoard.placeShip(ship, 0, 0, ORIENTATIONS.HORIZONTAL);
 
       // Mock document.querySelector to return cell for coordinates 0,0
-      const mockCell = document.createElement("div");
-      mockCell.classList.add("cell");
-      mockCell.dataset.row = "1";
-      mockCell.dataset.col = "1";
+      const mockCell = createCellElement(1, 1);
       // Make querySelector return the cell for the specific coordinates
       document.querySelector = jest.fn((selector) => {
         if (
@@ -468,8 +434,7 @@ describe("GameController", () => {
     });
 
     test("should switch to player turn on miss", () => {
-      const mockCell = document.createElement("div");
-      mockCell.classList.add("cell");
+      const mockCell = createCellElement(1, 1);
       document.querySelector = jest.fn(() => mockCell);
       jest.spyOn(computer, "attack").mockReturnValue(false);
 
@@ -481,16 +446,10 @@ describe("GameController", () => {
 
     test("should handle already attacked cells by finding another", () => {
       // Create a cell that's already attacked
-      const attackedCell = document.createElement("div");
-      attackedCell.classList.add("cell", "attacked");
-      attackedCell.dataset.row = "1";
-      attackedCell.dataset.col = "1";
+      const attackedCell = createCellElement(1, 1, ["attacked"]);
 
       // Create a valid cell
-      const validCell = document.createElement("div");
-      validCell.classList.add("cell");
-      validCell.dataset.row = "2";
-      validCell.dataset.col = "2";
+      const validCell = createCellElement(2, 2);
 
       // Mock querySelector to return attacked cell first, then valid cell
       let callCount = 0;
@@ -554,8 +513,7 @@ describe("GameController", () => {
     });
 
     test("should attack adjacent cell", () => {
-      const mockCell = document.createElement("div");
-      mockCell.classList.add("cell");
+      const mockCell = createCellElement(1, 1);
       document.querySelector = jest.fn(() => mockCell);
       jest.spyOn(computer, "attack").mockReturnValue(true);
       jest.spyOn(gameController, "processSmartAttack");
@@ -588,8 +546,7 @@ describe("GameController", () => {
     });
 
     test("should attack and fill cell", () => {
-      const mockCell = document.createElement("div");
-      mockCell.classList.add("cell");
+      const mockCell = createCellElement(1, 1);
       jest.spyOn(computer, "attack").mockReturnValue(true);
 
       gameController.processSmartAttack(0, 1, mockCell);
@@ -599,8 +556,7 @@ describe("GameController", () => {
     });
 
     test("should play sound on attack", () => {
-      const mockCell = document.createElement("div");
-      mockCell.classList.add("cell");
+      const mockCell = createCellElement(1, 1);
       jest.spyOn(computer, "attack").mockReturnValue(true);
 
       gameController.processSmartAttack(0, 1, mockCell);
@@ -614,8 +570,7 @@ describe("GameController", () => {
       player.gameBoard.placeShip(ship, 0, 1, ORIENTATIONS.HORIZONTAL);
       ship.hit();
 
-      const mockCell = document.createElement("div");
-      mockCell.classList.add("cell");
+      const mockCell = createCellElement(1, 1);
       jest.spyOn(computer, "attack").mockReturnValue(true);
       jest.spyOn(gameController, "endGame");
 
@@ -629,8 +584,7 @@ describe("GameController", () => {
       const ship = new Ship(2);
       player.gameBoard.placeShip(ship, 5, 5, ORIENTATIONS.HORIZONTAL);
 
-      const mockCell = document.createElement("div");
-      mockCell.classList.add("cell");
+      const mockCell = createCellElement(1, 1);
       jest.spyOn(computer, "attack").mockReturnValue(true);
       jest.spyOn(gameController, "updateSmartAttackOnHit");
       jest.spyOn(gameController, "scheduleComputerAttack");
@@ -648,8 +602,7 @@ describe("GameController", () => {
       const ship = new Ship(2);
       player.gameBoard.placeShip(ship, 5, 5, ORIENTATIONS.HORIZONTAL);
 
-      const mockCell = document.createElement("div");
-      mockCell.classList.add("cell");
+      const mockCell = createCellElement(1, 1);
       jest.spyOn(computer, "attack").mockReturnValue(false);
       jest.spyOn(gameController, "updateSmartAttackOnMiss");
       jest.spyOn(gameController, "endGame");
