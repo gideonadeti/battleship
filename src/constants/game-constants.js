@@ -20,3 +20,9 @@ export const ORIENTATIONS = {
   HORIZONTAL: "horizontal",
   VERTICAL: "vertical",
 };
+
+export const GAME_STATES = {
+  SETUP: "setup",
+  PLAYING: "playing",
+  GAME_OVER: "game_over",
+};
