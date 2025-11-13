@@ -14,6 +14,9 @@ let cancelGameHandler = null;
 function playGame() {
   UI.initialize();
 
+  // Reset UI to setup state (shows start button, fades computer board)
+  UI.resetToSetupState();
+
   // Create new players each time playGame is called
   ({ player, computer } = createPlayers());
 
@@ -80,10 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   UI.playAgainButton.addEventListener("click", () => {
-    UI.fadeComputerBoard();
-    UI.updateNotification("Place your ships.");
-    UI.randomizeButton.disabled = false;
     playSound("click");
-    playGame();
+    playGame(); // playGame() now calls resetToSetupState() which handles everything
   });
 });
