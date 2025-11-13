@@ -10,7 +10,7 @@
     "deploy": "git subtree push --prefix dist origin gh-pages"
   },
   "keywords": [],
-  "author": "Gideon Delali Adeti",
+  "author": "Gideon Adeti",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.24.7",

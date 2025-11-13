@@ -231,7 +231,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👤 Author
 
-**Gideon Delali Adeti**
+**Gideon Adeti**
 
 - GitHub: [@gideonadeti](https://github.com/gideonadeti)
 - Project Link: [https://github.com/gideonadeti/battleship](https://github.com/gideonadeti/battleship)
