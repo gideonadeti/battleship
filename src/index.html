@@ -193,11 +193,23 @@
             <ol>
               <li>
                 Both your ships and the computer's are placed randomly on the
-                grid.
+                grid at the start.
               </li>
               <li>
-                You can click the "Randomize" button to select a different
-                random ship placements if you don't like the initial one.
+                You can manually place your ships by dragging and dropping them
+                to your desired positions on your board.
+              </li>
+              <li>
+                Double-click on any ship to rotate it between horizontal and
+                vertical orientations.
+              </li>
+              <li>
+                Alternatively, click the "Randomize" button to automatically
+                place all your ships in random positions.
+              </li>
+              <li>
+                Once you're satisfied with your ship placement, click "Start
+                Game" to begin.
               </li>
             </ol>
 
@@ -213,14 +225,36 @@
             <p class="fw-bold mt-2">Game Play</p>
             <ol>
               <li>
-                You and the computer take turns to attack by selecting a grid
-                coordinate.
+                You and the computer take turns to attack by clicking on a grid
+                coordinate on the opponent's board.
               </li>
               <li>
-                If a ship is hit, the current player will continue to attack
-                until the next miss, then turns are switched.
+                A hit is marked in red, and a miss is marked with an "X".
+              </li>
+              <li>
+                If a ship is hit, the current player continues to attack until
+                the next miss, then turns are switched.
+              </li>
+              <li>
+                When a ship is completely sunk, all adjacent cells are marked as
+                verified empty (if the setting is enabled).
+              </li>
+              <li>
+                The first player to sink all of the opponent's ships wins!
               </li>
             </ol>
+
+            <p class="fw-bold mt-2">Settings</p>
+            <ul>
+              <li>
+                <strong>Mark verified empty cells:</strong> When enabled, cells
+                adjacent to sunk ships are marked with an "O" to help you
+                identify areas where no ships can be located.
+              </li>
+              <li>
+                <strong>Sound on:</strong> Toggle game sound effects on or off.
+              </li>
+            </ul>
 
             <p class="fw-bold mt-2">Tips</p>
             <ul>
@@ -231,6 +265,10 @@
               <li>
                 Pay attention to the pattern of hits and misses to adjust your
                 strategy.
+              </li>
+              <li>
+                Enable "Mark verified empty cells" to help track areas where
+                ships cannot be located.
               </li>
               <li>
                 The computer can make 'smart' attacks, so don't underestimate
