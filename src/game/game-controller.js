@@ -145,7 +145,15 @@ export default class GameController {
       cell = document.querySelector(
         `.player .game-board .cell[data-row="${x + 1}"][data-col="${y + 1}"]`
       );
-    } while (cell.classList.contains("attacked"));
+    } while (!cell || cell.classList.contains("attacked"));
+
+    // Safety check: if cell is still null, something is wrong with the DOM
+    if (!cell) {
+      console.error("Could not find cell in DOM");
+      this.gameState.setCurrentPlayer(PLAYERS.PLAYER);
+      UI.updateNotification("Your turn.");
+      return;
+    }
 
     const hit = this.computer.attack(this.player, x, y);
     UI.fillCell(cell, hit);
@@ -196,7 +204,7 @@ export default class GameController {
           adjacentY + 1
         }"]`
       );
-      if (!adjacentCell.classList.contains("attacked")) {
+      if (adjacentCell && !adjacentCell.classList.contains("attacked")) {
         this.processSmartAttack(adjacentX, adjacentY, adjacentCell);
       } else {
         this.updateSmartAttackAfterInvalidMove();
