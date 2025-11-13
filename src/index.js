@@ -9,6 +9,7 @@ import playSound from "./models/sounds";
 let player, computer;
 let gameController = null;
 let startGameHandler = null;
+let cancelGameHandler = null;
 
 function playGame() {
   UI.initialize();
@@ -30,6 +31,12 @@ function playGame() {
     startGameHandler = null;
   }
 
+  // Remove previous cancel button event listener if it exists
+  if (cancelGameHandler) {
+    UI.cancelButton.removeEventListener("click", cancelGameHandler);
+    cancelGameHandler = null;
+  }
+
   // Create new handler for the current game
   startGameHandler = () => {
     UI.showComputerBoard();
@@ -41,8 +48,27 @@ function playGame() {
     UI.randomizeButton.disabled = true;
   };
 
-  // Add event listener
+  // Create cancel game handler
+  cancelGameHandler = () => {
+    // Reset the game controller
+    if (gameController) {
+      gameController.cleanup();
+      gameController = null;
+    }
+
+    // Reset UI to setup state
+    UI.fadeComputerBoard();
+    UI.updateNotification("Place your ships.");
+    UI.randomizeButton.disabled = false;
+    playSound("click");
+    
+    // Reset the game (this will create new players and boards)
+    playGame();
+  };
+
+  // Add event listeners
   UI.startButton.addEventListener("click", startGameHandler);
+  UI.cancelButton.addEventListener("click", cancelGameHandler);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
