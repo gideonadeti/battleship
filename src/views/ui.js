@@ -89,7 +89,10 @@ export default class UI {
 
   static showComputerBoard() {
     if (this.startButton) this.startButton.style.display = "none";
-    if (this.cancelButton) this.cancelButton.style.display = "block";
+    if (this.cancelButton) {
+      this.cancelButton.style.display = "block";
+      this.cancelButton.disabled = false;
+    }
     if (this.computerBoard) {
       this.computerBoard.style.opacity = 1;
       this.computerBoard.style.pointerEvents = "auto";
@@ -99,7 +102,10 @@ export default class UI {
 
   static fadeComputerBoard() {
     if (this.startButton) this.startButton.style.display = "block";
-    if (this.cancelButton) this.cancelButton.style.display = "none";
+    if (this.cancelButton) {
+      this.cancelButton.style.display = "none";
+      this.cancelButton.disabled = true;
+    }
     if (this.computerBoard) {
       this.computerBoard.style.opacity = 0.25;
       this.computerBoard.style.pointerEvents = "none";
