@@ -15,12 +15,26 @@ export default class UI {
   static cancelButton = document.querySelector(SELECTORS.CANCEL_BUTTON);
   static notification = document.querySelector(SELECTORS.NOTIFICATION);
   static computerBoard = document.querySelector(SELECTORS.COMPUTER_BOARD);
-  static playerBoard = document.querySelector(SELECTORS.PLAYER_BOARD);
+  static _playerBoard = document.querySelector(SELECTORS.PLAYER_BOARD);
   static randomizeButton = document.querySelector(SELECTORS.RANDOMIZE_BUTTON);
   static boards = document.querySelectorAll(SELECTORS.GAME_BOARDS);
   static gameOverModal = document.querySelector(SELECTORS.GAME_OVER_MODAL);
   static playAgainButton =
     this.gameOverModal?.querySelector(SELECTORS.PLAY_AGAIN) || null;
+
+  static get playerBoard() {
+    return this._playerBoard;
+  }
+
+  static set playerBoard(value) {
+    this._playerBoard = value;
+    if (this.boardManager) {
+      this.boardManager.playerBoard = value;
+    }
+    if (this.dragDropHandler) {
+      this.dragDropHandler.playerBoard = value;
+    }
+  }
 
   // Initialize managers
   static boardManager = new BoardManager(this.playerBoard, this.boards);
@@ -128,9 +142,10 @@ export default class UI {
   static setRandomizeButtonText(text) {
     if (this.randomizeButton) {
       // Set appropriate icon based on text
-      const iconHtml = text === "Randomize" 
-        ? '<i class="bi bi-shuffle"></i>' 
-        : '<i class="bi bi-arrow-repeat"></i>';
+      const iconHtml =
+        text === "Randomize"
+          ? '<i class="bi bi-shuffle"></i>'
+          : '<i class="bi bi-arrow-repeat"></i>';
       this.randomizeButton.innerHTML = `${text} ${iconHtml}`;
     }
   }
@@ -184,6 +199,10 @@ export default class UI {
 
   static get dragState() {
     return this.dragDropHandler.dragState;
+  }
+
+  static set dragState(value) {
+    this.dragDropHandler.dragState = value;
   }
 
   // ==================== Coordinate Utilities (delegated methods) ====================
