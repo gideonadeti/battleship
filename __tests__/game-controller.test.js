@@ -14,18 +14,36 @@ jest.mock("../src/models/sounds", () => ({
   default: jest.fn(),
 }));
 
-jest.mock("../src/views/ui", () => ({
-  __esModule: true,
-  default: {
-    computerBoard: {
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
+jest.mock("../src/views/ui", () => {
+  const createButtonMock = () => ({
+    style: {},
+    disabled: false,
+  });
+
+  const computerBoard = {
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    style: {},
+  };
+
+  return {
+    __esModule: true,
+    default: {
+      computerBoard,
+      cancelButton: createButtonMock(),
+      startButton: createButtonMock(),
+      randomizeButton: { ...createButtonMock(), innerHTML: "" },
+      updateNotification: jest.fn(),
+      fillCell: jest.fn(),
+      showGameOverModal: jest.fn(),
+      markVerifiedEmptyCell: jest.fn(),
+      isMarkVerifiedEnabled: jest.fn(() => false),
+      disableCancelButton: jest.fn(),
+      enableRandomizeButton: jest.fn(),
+      setRandomizeButtonText: jest.fn(),
     },
-    updateNotification: jest.fn(),
-    fillCell: jest.fn(),
-    showGameOverModal: jest.fn(),
-  },
-}));
+  };
+});
 
 import playSound from "../src/models/sounds";
 import UI from "../src/views/ui";
