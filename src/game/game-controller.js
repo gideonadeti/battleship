@@ -341,7 +341,7 @@ export default class GameController {
 
     playSound(sound);
     UI.showGameOverModal(outcome);
-    UI.updateNotification(`${outcome} Click "New Game" to play again.`);
+    UI.updateNotification(outcome);
     
     // Disable and hide cancel button when game ends
     UI.disableCancelButton();
