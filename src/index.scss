@@ -11,6 +11,18 @@
 $tertiary: #adb5bd;
 $secondary-subtle: #e2e3e5;
 
+// Responsive breakpoints (Bootstrap standard + custom)
+$breakpoint-xs: 480px;  // Very small mobile
+$breakpoint-sm: 576px;  // Bootstrap sm
+$breakpoint-md: 768px;  // Bootstrap md
+$breakpoint-lg: 992px;  // Bootstrap lg
+$breakpoint-xl: 1200px; // Bootstrap xl
+
+// Responsive sizing variables
+$cell-size-mobile: 1.5rem;  // 24px minimum for touch targets
+$cell-size-tablet: 2rem;    // 32px
+$cell-size-desktop: 2.5rem; // 40px
+
 /* Standards */
 h1,
 h2,
@@ -28,6 +40,37 @@ p {
 
 body {
   font-family: "Roboto", sans-serif;
+}
+
+// Navbar responsive styles
+.navbar {
+  .notification {
+    min-width: 100px;
+    font-size: 0.875rem;
+    text-align: center;
+
+    @media (min-width: $breakpoint-sm) {
+      min-width: 150px;
+      font-size: 1rem;
+    }
+
+    @media (min-width: $breakpoint-md) {
+      min-width: 20vw;
+    }
+
+    @media (min-width: $breakpoint-lg) {
+      min-width: 30vw;
+    }
+  }
+
+  .container-fluid {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    @media (min-width: $breakpoint-sm) {
+      flex-wrap: nowrap;
+    }
+  }
 }
 
 .how-to-play-icon {
@@ -49,13 +92,33 @@ footer a {
 
 main {
   display: grid;
-  grid-template-rows: 84% 6% 10%;
+  // Mobile-first: more space for stacked boards
+  grid-template-rows: auto auto auto;
+  gap: 1rem;
+
+  // Desktop: original proportions
+  @media (min-width: $breakpoint-lg) {
+    grid-template-rows: 84% 6% 10%;
+    gap: 0;
+  }
 
   .game-boards {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 5rem;
+    // Mobile-first: single column (stacked vertically)
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
     user-select: none;
+
+    // Tablet: slightly more gap
+    @media (min-width: $breakpoint-md) {
+      gap: 2rem;
+    }
+
+    // Desktop: side-by-side layout
+    @media (min-width: $breakpoint-lg) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 5rem;
+    }
 
     > div {
       display: flex;
@@ -66,9 +129,22 @@ main {
 
     .game-board {
       display: grid;
-      grid-template-columns: repeat(11, 2.5rem);
-      grid-template-rows: repeat(11, 2.5rem);
+      // Mobile-first: responsive cell sizing
+      grid-template-columns: repeat(11, $cell-size-mobile);
+      grid-template-rows: repeat(11, $cell-size-mobile);
       margin-top: 0.25rem;
+
+      // Tablet: larger cells
+      @media (min-width: $breakpoint-md) {
+        grid-template-columns: repeat(11, $cell-size-tablet);
+        grid-template-rows: repeat(11, $cell-size-tablet);
+      }
+
+      // Desktop: original size
+      @media (min-width: $breakpoint-lg) {
+        grid-template-columns: repeat(11, $cell-size-desktop);
+        grid-template-rows: repeat(11, $cell-size-desktop);
+      }
 
       .cell {
         display: flex;
@@ -98,6 +174,29 @@ main {
           cursor: unset;
         }
 
+        &.ship-cell {
+          cursor: grab;
+
+          &:active {
+            cursor: grabbing;
+          }
+
+          &.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+          }
+        }
+
+        &.valid-drop {
+          background-color: rgba(25, 135, 84, 0.3) !important;
+          border: 2px solid rgba(25, 135, 84, 0.8) !important;
+        }
+
+        &.invalid-drop {
+          background-color: rgba(220, 53, 69, 0.3) !important;
+          border: 2px solid rgba(220, 53, 69, 0.8) !important;
+        }
+
         &.computer-ship {
           &.attacked {
             background-color: $tertiary !important;
@@ -111,6 +210,15 @@ main {
           background-color: $light;
           cursor: unset;
         }
+
+        &.verified-empty {
+          background-color: rgba(173, 216, 230, 0.3) !important;
+          border: 1px dashed rgba(0, 123, 255, 0.5);
+          
+          .content {
+            color: rgba(0, 123, 255, 0.7);
+          }
+        }
       }
     }
 
@@ -122,16 +230,87 @@ main {
     }
   }
 
+  // Button and controls container
+  .button-controls {
+    width: 100%;
+    justify-content: flex-start;
+
+    @media (min-width: $breakpoint-sm) {
+      width: auto;
+      max-width: max-content;
+    }
+  }
+
   .randomize {
     cursor: pointer;
     transition: transform 0.3s;
+    width: 100%;
+
+    @media (min-width: $breakpoint-sm) {
+      width: auto;
+    }
 
     &:hover {
       transform: translateX(6px);
     }
   }
 
+  .cancel-button {
+    width: 100%;
+
+    @media (min-width: $breakpoint-sm) {
+      width: auto;
+    }
+  }
+
+  .settings {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+
+    @media (min-width: $breakpoint-sm) {
+      width: auto;
+      max-width: max-content;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    > div {
+      flex-direction: column;
+      gap: 0.5rem;
+
+      @media (min-width: $breakpoint-sm) {
+        flex-direction: row;
+        gap: 1.5rem;
+      }
+
+      @media (min-width: $breakpoint-md) {
+        gap: 3rem;
+      }
+    }
+  }
+
   .form-check {
     margin-bottom: 0;
+  }
+}
+
+// Footer responsive styles
+footer {
+  font-size: 0.875rem;
+
+  @media (min-width: $breakpoint-sm) {
+    font-size: 1rem;
+  }
+
+  p {
+    word-wrap: break-word;
+    padding: 0 0.5rem;
+
+    @media (min-width: $breakpoint-sm) {
+      padding: 0;
+    }
   }
 }
