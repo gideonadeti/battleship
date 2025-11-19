@@ -208,6 +208,13 @@ class AuthDialog {
       <hr />
       <button
         type="button"
+        class="btn btn-outline-primary w-100 mb-2"
+        data-games-history-trigger
+      >
+        <i class="bi bi-clock-history"></i> View Game History
+      </button>
+      <button
+        type="button"
         class="btn btn-outline-danger w-100 mb-2"
         data-auth-sign-out
       >
@@ -275,6 +282,19 @@ class AuthDialog {
       deleteAccountButton.addEventListener("click", () =>
         this.handleDeleteAccount()
       );
+    }
+
+    const gamesHistoryButton = this.body.querySelector(
+      "[data-games-history-trigger]"
+    );
+
+    if (gamesHistoryButton) {
+      gamesHistoryButton.addEventListener("click", () => {
+        this.modal?.hide();
+        if (window.gamesHistoryInstance) {
+          window.gamesHistoryInstance.show();
+        }
+      });
     }
   }
 }
