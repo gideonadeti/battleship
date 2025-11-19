@@ -382,6 +382,114 @@
       </div>
     </div>
 
+    <!-- Games History Modal -->
+    <div
+      class="modal fade"
+      id="games-history-modal"
+      tabindex="-1"
+      aria-labelledby="games-history-modal-title"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="games-history-modal-title">
+              Game History
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div
+              class="alert alert-danger py-2 d-none mb-2"
+              role="alert"
+              data-games-history-error
+            ></div>
+            <div
+              class="text-center py-3 d-none"
+              data-games-history-loading
+            >
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <p class="mt-2 text-secondary">Loading game history...</p>
+            </div>
+            <div data-games-history-content class="d-none">
+              <div class="mb-3 d-flex align-items-center gap-2 flex-wrap">
+                <span class="text-secondary small">Filter by outcome:</span>
+                <div class="btn-group" role="group" data-games-history-filters>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-primary active"
+                    data-filter="all"
+                  >
+                    All
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-success"
+                    data-filter="WON"
+                  >
+                    Won
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-danger"
+                    data-filter="LOST"
+                  >
+                    Lost
+                  </button>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                  <thead data-games-history-thead></thead>
+                  <tbody data-games-history-tbody></tbody>
+                </table>
+              </div>
+              <div
+                class="d-flex align-items-center justify-content-between mt-3"
+                data-games-history-pagination
+              >
+                <div class="text-secondary small">
+                  <span data-games-history-count></span>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    data-games-history-prev
+                    disabled
+                  >
+                    Previous
+                  </button>
+                  <span class="text-secondary small" data-games-history-page-info></span>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    data-games-history-next
+                    disabled
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div
+              class="text-center py-4 text-secondary d-none"
+              data-games-history-empty
+            >
+              <p class="mb-0">No games found.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Bootstrap JS -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
