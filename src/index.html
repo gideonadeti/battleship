@@ -179,6 +179,18 @@
         <div class="modal-content">
           <div class="modal-body">
             <h1 class="outcome text-center">You won!</h1>
+            <div
+              class="alert alert-danger py-2 d-none mb-2"
+              role="alert"
+              data-game-save-error
+            ></div>
+            <div
+              class="alert alert-success py-2 d-none mb-2"
+              role="alert"
+              data-game-save-success
+            >
+              Game saved successfully!
+            </div>
           </div>
           <div class="modal-footer">
             <button
@@ -187,6 +199,20 @@
               data-bs-dismiss="modal"
             >
               Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-success d-none"
+              data-save-game-button
+            >
+              Save Game
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-primary d-none"
+              data-sign-in-to-save-button
+            >
+              Sign In to Save
             </button>
             <button
               type="button"
