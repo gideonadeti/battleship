@@ -6,6 +6,12 @@ const gamesService = {
 
     return data;
   },
+
+  async getGames() {
+    const { data } = await httpClient.get("/games");
+
+    return data;
+  },
 };
 
 export default gamesService;
