@@ -5,6 +5,7 @@ import UI from "./views/ui";
 import createPlayers from "./models/create-players";
 import GameController from "./game/game-controller";
 import playSound from "./models/sounds";
+import { initializeAuthDialog } from "./views/auth-dialog";
 
 let player, computer;
 let gameController = null;
@@ -75,6 +76,8 @@ function playGame() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  initializeAuthDialog();
+
   playGame();
 
   UI.randomizeButton.addEventListener("click", () => {
