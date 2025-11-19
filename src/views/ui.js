@@ -50,8 +50,53 @@ export default class UI {
     myModal.show();
   }
 
-  static showGameOverModal(outcome) {
+  static showGameOverModal(outcome, gameData = null) {
     this.gameOverModal.querySelector(SELECTORS.OUTCOME).textContent = outcome;
+
+    // Get modal elements
+    const saveGameButton = this.gameOverModal.querySelector(
+      SELECTORS.SAVE_GAME_BUTTON
+    );
+
+    const signInToSaveButton = this.gameOverModal.querySelector(
+      SELECTORS.SIGN_IN_TO_SAVE_BUTTON
+    );
+
+    const errorElement = this.gameOverModal.querySelector(
+      SELECTORS.GAME_SAVE_ERROR
+    );
+
+    const successElement = this.gameOverModal.querySelector(
+      SELECTORS.GAME_SAVE_SUCCESS
+    );
+
+    // Hide error and success messages
+    if (errorElement) {
+      errorElement.classList.add("d-none");
+      errorElement.textContent = "";
+    }
+
+    if (successElement) {
+      successElement.classList.add("d-none");
+    }
+
+    // Store game data for saving
+    if (gameData) {
+      this.gameOverModal.dataset.gameData = JSON.stringify(gameData);
+    } else {
+      delete this.gameOverModal.dataset.gameData;
+    }
+
+    // Show/hide save buttons based on authentication status
+    // This will be handled by the event listener setup
+    if (saveGameButton) {
+      saveGameButton.classList.add("d-none");
+    }
+
+    if (signInToSaveButton) {
+      signInToSaveButton.classList.add("d-none");
+    }
+
     this.showModal(this.gameOverModal);
   }
 
