@@ -54,6 +54,35 @@ class AuthDialog {
     this.render(authStore.getState());
   }
 
+  async handleDeleteAccount() {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete your account? This action cannot be undone and all your saved game data will be permanently deleted."
+    );
+
+    if (!confirmed) return;
+
+    this.isSubmitting = true;
+
+    this.setError("");
+
+    try {
+      await authService.deleteAccount();
+
+      this.mode = "signIn";
+
+      this.render(authStore.getState());
+    } catch (error) {
+      const message =
+        error.response?.data?.message ||
+        error.message ||
+        "Failed to delete account. Please try again.";
+
+      this.setError(Array.isArray(message) ? message.join(" ") : message);
+    } finally {
+      this.isSubmitting = false;
+    }
+  }
+
   async handleSubmit(event) {
     event.preventDefault();
 
@@ -179,10 +208,17 @@ class AuthDialog {
       <hr />
       <button
         type="button"
-        class="btn btn-outline-danger w-100"
+        class="btn btn-outline-danger w-100 mb-2"
         data-auth-sign-out
       >
         Sign Out
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-danger w-100"
+        data-auth-delete-account
+      >
+        Delete Account
       </button>
     `;
   }
@@ -229,6 +265,16 @@ class AuthDialog {
 
     if (signOutButton) {
       signOutButton.addEventListener("click", () => this.handleSignOut());
+    }
+
+    const deleteAccountButton = this.body.querySelector(
+      "[data-auth-delete-account]"
+    );
+
+    if (deleteAccountButton) {
+      deleteAccountButton.addEventListener("click", () =>
+        this.handleDeleteAccount()
+      );
     }
   }
 }
