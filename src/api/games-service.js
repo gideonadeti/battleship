@@ -12,6 +12,12 @@ const gamesService = {
 
     return data;
   },
+
+  async deleteGame(gameId) {
+    const { data } = await httpClient.delete(`/games/${gameId}`);
+
+    return data;
+  },
 };
 
 export default gamesService;
