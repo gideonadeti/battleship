@@ -31,6 +31,9 @@ export default class GameController {
     this.gameState.setState(GAME_STATES.PLAYING);
     this.startTime = Date.now();
 
+    // Start the game timer
+    UI.startTimer();
+
     playSound("gameStarted");
     UI.updateNotification(
       startingPlayer === PLAYERS.PLAYER
@@ -329,6 +332,9 @@ export default class GameController {
     this.gameState.setWinner(winner);
     this.gameState.setState(GAME_STATES.GAME_OVER);
 
+    // Stop the game timer
+    UI.stopTimer();
+
     // Clear computer timeout
     if (this.computerTimeout) {
       clearTimeout(this.computerTimeout);
@@ -341,10 +347,10 @@ export default class GameController {
     const outcome = winner === PLAYERS.PLAYER ? "You won!" : "You lose!";
     const sound = winner === PLAYERS.PLAYER ? "win" : "lose";
 
-    // Calculate game duration in seconds
-    const duration = this.startTime
+    // Calculate game duration in seconds (use timer if available, otherwise calculate)
+    const duration = UI.getTimerElapsedSeconds() || (this.startTime
       ? Math.floor((Date.now() - this.startTime) / 1000)
-      : 0;
+      : 0);
 
     // Determine game outcome for API (WON or LOST)
     const gameOutcome = winner === PLAYERS.PLAYER ? "WON" : "LOST";
@@ -383,6 +389,9 @@ export default class GameController {
    * Reset the game controller
    */
   reset() {
+    // Reset the game timer
+    UI.resetTimer();
+
     // Clear computer timeout
     if (this.computerTimeout) {
       clearTimeout(this.computerTimeout);
