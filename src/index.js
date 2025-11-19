@@ -7,6 +7,7 @@ import GameController from "./game/game-controller";
 import playSound from "./models/sounds";
 import { initializeAuthDialog } from "./views/auth-dialog";
 import { initializeGameSaveHandler } from "./views/game-save-handler";
+import { initializeGamesHistory } from "./views/games-history";
 
 let player, computer;
 let gameController = null;
@@ -79,6 +80,7 @@ function playGame() {
 document.addEventListener("DOMContentLoaded", () => {
   initializeAuthDialog();
   initializeGameSaveHandler();
+  initializeGamesHistory();
 
   playGame();
 
