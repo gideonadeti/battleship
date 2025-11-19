@@ -4,6 +4,7 @@
  */
 
 import * as bootstrap from "bootstrap";
+import GameTimer from "../utils/game-timer";
 import { SELECTORS } from "./ui-constants";
 import { BoardManager } from "./ui-board";
 import { DragDropHandler } from "./ui-drag-drop";
@@ -42,6 +43,8 @@ export default class UI {
     this.playerBoard,
     this.boardManager
   );
+
+  static gameTimer = new GameTimer();
 
   // ==================== Modal Methods ====================
 
@@ -299,5 +302,23 @@ export default class UI {
 
   static resetDragState() {
     this.dragDropHandler.resetDragState();
+  }
+
+  // ==================== Timer Methods ====================
+
+  static startTimer() {
+    this.gameTimer.start();
+  }
+
+  static stopTimer() {
+    this.gameTimer.stop();
+  }
+
+  static resetTimer() {
+    this.gameTimer.reset();
+  }
+
+  static getTimerElapsedSeconds() {
+    return this.gameTimer.getElapsedSeconds();
   }
 }
