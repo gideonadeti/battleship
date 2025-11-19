@@ -220,6 +220,7 @@ class GamesHistory {
       { id: "date", header: "Date" },
       { id: "duration", header: "Duration" },
       { id: "outcome", header: "Outcome" },
+      { id: "actions", header: "Actions" },
     ];
 
     // Render header
@@ -235,6 +236,10 @@ class GamesHistory {
                 : sortDirection === "desc"
                 ? '<i class="bi bi-arrow-down"></i>'
                 : '<i class="bi bi-arrow-down-up text-secondary"></i>';
+
+            if (column.id === "actions") {
+              return `<th>${column.header}</th>`;
+            }
 
             return `<th 
               style="cursor: pointer; user-select: none;"
@@ -260,7 +265,7 @@ class GamesHistory {
     // Render body
     if (this.tbodyElement) {
       if (paginatedGames.length === 0) {
-        this.tbodyElement.innerHTML = `<tr><td colspan="3" class="text-center text-secondary">No games found.</td></tr>`;
+        this.tbodyElement.innerHTML = `<tr><td colspan="4" class="text-center text-secondary">No games found.</td></tr>`;
       } else {
         this.tbodyElement.innerHTML = paginatedGames
           .map((game) => {
@@ -282,14 +287,83 @@ class GamesHistory {
               <td>${date}</td>
               <td>${duration}</td>
               <td><span class="${badgeClass}">${outcomeText}</span></td>
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-danger"
+                  data-delete-game="${game.id}"
+                  title="Delete game"
+                >
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
             </tr>`;
           })
           .join("");
+
+        // Set up delete button event listeners
+        this.setupDeleteButtons();
       }
     }
 
     // Update pagination info
     this.updatePaginationInfo();
+  }
+
+  setupDeleteButtons() {
+    if (!this.tbodyElement) return;
+
+    const deleteButtons =
+      this.tbodyElement.querySelectorAll("[data-delete-game]");
+
+    deleteButtons.forEach((button) => {
+      button.addEventListener("click", (event) => {
+        const gameId = event.currentTarget.getAttribute("data-delete-game");
+        this.handleDelete(gameId);
+      });
+    });
+  }
+
+  async handleDelete(gameId) {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this game? This action cannot be undone."
+    );
+
+    if (!confirmed) return;
+
+    try {
+      await gamesService.deleteGame(gameId);
+
+      // Remove the game from local state
+      this.games = this.games.filter((game) => game.id !== gameId);
+      this.applyFilters();
+
+      // Adjust page index if current page becomes empty
+      const totalPages = Math.ceil(
+        this.filteredGames.length / this.state.pagination.pageSize
+      );
+      if (
+        this.state.pagination.pageIndex >= totalPages &&
+        this.state.pagination.pageIndex > 0
+      ) {
+        this.state.pagination.pageIndex = totalPages - 1;
+      }
+
+      // Re-render the table
+      this.renderTable();
+
+      // Show empty state if no games left
+      if (this.filteredGames.length === 0) {
+        this.showEmpty();
+        this.hideContent();
+      }
+    } catch (error) {
+      const message =
+        error.response?.data?.message ||
+        error.message ||
+        "Failed to delete game. Please try again.";
+      this.showError(message);
+    }
   }
 
   handleSort(columnId) {
