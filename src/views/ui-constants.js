@@ -31,6 +31,10 @@ export const SELECTORS = {
   SOUND_ON: "#sound-on",
   MARK_VERIFIED: "#mark-verified",
   OUTCOME: ".outcome",
+  SAVE_GAME_BUTTON: "[data-save-game-button]",
+  SIGN_IN_TO_SAVE_BUTTON: "[data-sign-in-to-save-button]",
+  GAME_SAVE_ERROR: "[data-game-save-error]",
+  GAME_SAVE_SUCCESS: "[data-game-save-success]",
 };
 
 export const COLUMN_LABELS = ["", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
