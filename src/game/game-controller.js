@@ -17,6 +17,7 @@ export default class GameController {
     this.computerTimeout = null;
     this.computerShip = null;
     this.playerShip = null;
+    this.startTime = null;
   }
 
   /**
@@ -28,6 +29,7 @@ export default class GameController {
       Math.random() > 0.5 ? PLAYERS.PLAYER : PLAYERS.COMPUTER;
     this.gameState.setCurrentPlayer(startingPlayer);
     this.gameState.setState(GAME_STATES.PLAYING);
+    this.startTime = Date.now();
 
     playSound("gameStarted");
     UI.updateNotification(
@@ -339,8 +341,19 @@ export default class GameController {
     const outcome = winner === PLAYERS.PLAYER ? "You won!" : "You lose!";
     const sound = winner === PLAYERS.PLAYER ? "win" : "lose";
 
+    // Calculate game duration in seconds
+    const duration = this.startTime
+      ? Math.floor((Date.now() - this.startTime) / 1000)
+      : 0;
+
+    // Determine game outcome for API (WON or LOST)
+    const gameOutcome = winner === PLAYERS.PLAYER ? "WON" : "LOST";
+
     playSound(sound);
-    UI.showGameOverModal(outcome);
+    UI.showGameOverModal(outcome, {
+      outcome: gameOutcome,
+      duration,
+    });
     UI.updateNotification(outcome);
     
     // Disable and hide cancel button when game ends
