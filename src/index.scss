@@ -81,6 +81,28 @@ body {
   }
 }
 
+.auth-dialog-trigger {
+  font-size: 0.875rem;
+
+  @media (max-width: $breakpoint-sm) {
+    padding-inline: 0.5rem;
+  }
+}
+
+.auth-avatar {
+  width: 48px;
+  height: 48px;
+  background-color: $secondary-subtle;
+  color: $dark;
+  font-size: 1.5rem;
+}
+
+.auth-dialog-profile {
+  .link-primary {
+    word-break: break-all;
+  }
+}
+
 main a,
 footer a {
   text-decoration: none;
