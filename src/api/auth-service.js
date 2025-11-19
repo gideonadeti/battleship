@@ -19,6 +19,11 @@ const authService = {
 
     return handleAuthSuccess(data);
   },
+  async deleteAccount() {
+    await httpClient.delete("/auth/account");
+
+    authStore.clearSession();
+  },
   signOut() {
     authStore.clearSession();
   },
