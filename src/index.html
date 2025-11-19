@@ -39,9 +39,15 @@
       <nav class="navbar">
         <div class="container-fluid">
           <span class="navbar-brand fw-bold h1">Battleship</span>
-          <p class="notification bg-light mx-auto px-2 py-1">
-            Place your ships.
-          </p>
+          <div class="d-flex align-items-center gap-3 mx-auto">
+            <p class="notification bg-light px-2 py-1 mb-0">
+              Place your ships.
+            </p>
+            <div class="game-timer d-none bg-light px-2 py-1 rounded">
+              <i class="bi bi-stopwatch"></i>
+              <span class="timer-display">00:00</span>
+            </div>
+          </div>
           <div class="d-flex align-items-center gap-2">
             <i
               class="bi bi-info-circle fs-5 how-to-play-icon px-2 py-1 rounded"
@@ -97,29 +103,41 @@
         class="settings my-2 p-2 d-flex align-items-center gap-2 bg-secondary-subtle rounded"
       >
         <p>Settings:</p>
-        <div class="d-flex align-items-center gap-3">
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              name="mark-verified"
-              id="mark-verified"
-            />
-            <label class="form-check-label" for="mark-verified"
-              >Mark verified empty cells</label
-            >
+          <div class="d-flex align-items-center gap-3">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="mark-verified"
+                id="mark-verified"
+              />
+              <label class="form-check-label" for="mark-verified"
+                >Mark verified empty cells</label
+              >
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="sound-on"
+                id="sound-on"
+                checked
+              />
+              <label class="form-check-label" for="sound-on">Sound on</label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="show-timer"
+                id="show-timer"
+                checked
+              />
+              <label class="form-check-label" for="show-timer"
+                >Show timer</label
+              >
+            </div>
           </div>
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              name="sound-on"
-              id="sound-on"
-              checked
-            />
-            <label class="form-check-label" for="sound-on">Sound on</label>
-          </div>
-        </div>
       </div>
     </main>
     <footer class="container text-center fw-medium text-secondary mt-auto">
