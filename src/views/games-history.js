@@ -27,8 +27,10 @@ class GamesHistory {
       "[data-games-history-page-info]"
     );
 
+    this.firstButton = document.querySelector("[data-games-history-first]");
     this.prevButton = document.querySelector("[data-games-history-prev]");
     this.nextButton = document.querySelector("[data-games-history-next]");
+    this.lastButton = document.querySelector("[data-games-history-last]");
     this.games = [];
     this.filteredGames = [];
     this.currentFilter = "all";
@@ -75,6 +77,13 @@ class GamesHistory {
   }
 
   setupPaginationButtons() {
+    if (this.firstButton) {
+      this.firstButton.addEventListener("click", () => {
+        this.state.pagination.pageIndex = 0;
+        this.renderTable();
+      });
+    }
+
     if (this.prevButton) {
       this.prevButton.addEventListener("click", () => {
         this.state.pagination.pageIndex = Math.max(
@@ -98,6 +107,18 @@ class GamesHistory {
           this.state.pagination.pageIndex + 1
         );
 
+        this.renderTable();
+      });
+    }
+
+    if (this.lastButton) {
+      this.lastButton.addEventListener("click", () => {
+        const maxPageIndex =
+          Math.ceil(
+            this.filteredGames.length / this.state.pagination.pageSize
+          ) - 1;
+
+        this.state.pagination.pageIndex = maxPageIndex;
         this.renderTable();
       });
     }
@@ -391,6 +412,8 @@ class GamesHistory {
     const start = totalRows > 0 ? pageIndex * pageSize + 1 : 0;
     const end = Math.min((pageIndex + 1) * pageSize, totalRows);
     const totalPages = Math.ceil(totalRows / pageSize);
+    const isFirstPage = pageIndex === 0;
+    const isLastPage = pageIndex >= totalPages - 1 || totalPages === 0;
 
     if (this.countElement) {
       if (totalRows === 0) {
@@ -406,13 +429,20 @@ class GamesHistory {
       }`;
     }
 
+    if (this.firstButton) {
+      this.firstButton.disabled = isFirstPage;
+    }
+
     if (this.prevButton) {
-      this.prevButton.disabled = pageIndex === 0;
+      this.prevButton.disabled = isFirstPage;
     }
 
     if (this.nextButton) {
-      this.nextButton.disabled =
-        pageIndex >= totalPages - 1 || totalPages === 0;
+      this.nextButton.disabled = isLastPage;
+    }
+
+    if (this.lastButton) {
+      this.lastButton.disabled = isLastPage;
     }
   }
 
