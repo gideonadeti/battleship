@@ -46,6 +46,23 @@ A modern web-based implementation of the classic Battleship game, built with van
 - **Play Again**: Quick restart functionality
 - **Cancel Game**: Return to setup phase before starting
 
+## 🔮 Future Plans
+
+### Leaderboard Integration
+
+This project is planned to integrate with the [Real-time Leaderboard](https://github.com/gideonadeti/realtime-leaderboard) project, allowing players to compete globally and track their rankings.
+
+**Planned Features:**
+
+- **Opt-in Score Saving**: After each game, players can choose to save their game results to join leaderboard
+- **Automatic Updates & Real-time Rankings**: After each save, the leaderboards will be updated and the updates will be reflected in real-time on the [leaderboard frontend](https://github.com/gideonadeti/realtime-leaderboard-frontend)
+- **Competitive Play**: Players can compete against others and see their rankings improve over time
+
+**Related Projects:**
+
+- [Real-time Leaderboard Backend](https://github.com/gideonadeti/realtime-leaderboard) - NestJS backend with MongoDB and Prisma
+- [Real-time Leaderboard Frontend](https://github.com/gideonadeti/realtime-leaderboard-frontend) - Next.js frontend with ShadCN UI
+
 ## 🚀 Getting Started
 
 ### Prerequisites
