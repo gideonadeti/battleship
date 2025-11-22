@@ -2,6 +2,18 @@
 
 A modern web-based implementation of the classic Battleship game, built with vanilla JavaScript, SCSS, and Bootstrap. This project was developed as part of The Odin Project curriculum to practice Test-Driven Development (TDD) and complex DOM manipulation.
 
+**🎮 [Play the game live](https://gideonadeti.github.io/battleship)**
+
+## 📜 Project History
+
+This is the **third version** of my Battleship implementation, showcasing the evolution and improvement of my web development skills over time:
+
+- **v1** - [GitHub](https://github.com/Gideon-D-Adeti/battleship) | [Live Demo](https://gideon-d-adeti.github.io/battleship)
+- **v2** - [GitHub](https://github.com/GDA0/battleship) | [Live Demo](https://gda0.github.io/battleship/)
+- **v3** (Current) - [GitHub](https://github.com/gideonadeti/battleship) | [Live Demo](https://gideonadeti.github.io/battleship)
+
+Each version demonstrates progress in code organization, feature implementation, and overall game polish.
+
 ## 🎮 Features
 
 ### Core Gameplay
