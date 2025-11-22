@@ -183,13 +183,6 @@ npm test
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👤 Author
-
-**Gideon Adeti**
-
-- GitHub: [@gideonadeti](https://github.com/gideonadeti)
-- Project Link: [https://github.com/gideonadeti/battleship](https://github.com/gideonadeti/battleship)
-
 ## 🙏 Acknowledgments
 
 - [The Odin Project](https://www.theodinproject.com) for the curriculum and project inspiration
