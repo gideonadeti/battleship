@@ -265,30 +265,23 @@ main {
 
   .settings {
     width: 100%;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.75rem;
+    padding: 0.5rem 1rem;
+    justify-content: flex-start;
+    flex-wrap: wrap;
 
     @media (min-width: $breakpoint-sm) {
       width: auto;
       max-width: max-content;
-      flex-direction: row;
-      align-items: center;
-      gap: 0.5rem;
+      flex-wrap: nowrap;
+    }
+
+    .settings-label {
+      white-space: nowrap;
     }
 
     > div {
-      flex-direction: column;
-      gap: 0.5rem;
-
-      @media (min-width: $breakpoint-sm) {
-        flex-direction: row;
-        gap: 1.5rem;
-      }
-
-      @media (min-width: $breakpoint-md) {
-        gap: 3rem;
-      }
+      flex-wrap: wrap;
+      gap: 1.5rem;
     }
   }
 
