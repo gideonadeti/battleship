@@ -51,7 +51,7 @@ A modern web-based implementation of the classic Battleship game, built with van
 ### Prerequisites
 
 - Node.js (v14 or higher)
-- npm or yarn
+- A Node.js package manager (npm, yarn, pnpm, bun, etc.)
 
 ### Installation
 
@@ -62,7 +62,7 @@ git clone https://github.com/gideonadeti/battleship.git
 cd battleship
 ```
 
-2. Install dependencies:
+2. Install dependencies (using npm as an example; any package manager works):
 
 ```bash
 npm install
@@ -82,6 +82,7 @@ To create a production build:
 
 ```bash
 npm run build
+# or: yarn build, pnpm build, bun build, etc.
 ```
 
 The optimized files will be in the `dist/` directory.
@@ -92,6 +93,7 @@ Run the test suite with Jest:
 
 ```bash
 npm test
+# or: yarn test, pnpm test, bun test, etc.
 ```
 
 ### Deployment
@@ -100,6 +102,7 @@ Deploy to GitHub Pages:
 
 ```bash
 npm run deploy
+# or: yarn deploy, pnpm deploy, bun deploy, etc.
 ```
 
 ## 🎯 How to Play
