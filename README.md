@@ -2,9 +2,6 @@
 
 A modern web-based implementation of the classic Battleship game, built with vanilla JavaScript, SCSS, and Bootstrap. This project was developed as part of The Odin Project curriculum to practice Test-Driven Development (TDD) and complex DOM manipulation.
 
-![Battleship Game](https://img.shields.io/badge/Status-Active-success)
-![License](https://img.shields.io/badge/License-MIT-blue)
-
 ## 🎮 Features
 
 ### Core Gameplay
@@ -30,10 +27,9 @@ A modern web-based implementation of the classic Battleship game, built with van
 ### User Experience
 
 - **Sound Effects**: Immersive audio feedback for all game actions
-  - Ship placement randomization
-  - Game start/end
-  - Hit, miss, and ship sinking
-  - UI interactions
+  - Game start and win/lose outcomes
+  - Hit (wounded), miss, and ship sinking (killed) sounds
+  - UI button interactions (click)
 - **Visual Indicators**:
   - Red cells for hits
   - "X" markers for misses
