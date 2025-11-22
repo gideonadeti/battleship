@@ -62,16 +62,16 @@ git clone https://github.com/gideonadeti/battleship.git
 cd battleship
 ```
 
-2. Install dependencies (using npm as an example; any package manager works):
+2. Install dependencies (using bun as an example; any package manager works):
 
 ```bash
-npm install
+bun install
 ```
 
 3. Start the development server:
 
 ```bash
-npm start
+bun start
 ```
 
 The game will open automatically in your browser at `http://localhost:8080` (or the next available port).
@@ -81,8 +81,8 @@ The game will open automatically in your browser at `http://localhost:8080` (or 
 To create a production build:
 
 ```bash
-npm run build
-# or: yarn build, pnpm build, bun build, etc.
+bun run build
+# or: npm run build, yarn build, pnpm build, etc.
 ```
 
 The optimized files will be in the `dist/` directory.
@@ -92,8 +92,8 @@ The optimized files will be in the `dist/` directory.
 Run the test suite with Jest:
 
 ```bash
-npm test
-# or: yarn test, pnpm test, bun test, etc.
+bun test
+# or: npm test, yarn test, pnpm test, etc.
 ```
 
 ### Deployment
@@ -101,8 +101,8 @@ npm test
 Deploy to GitHub Pages:
 
 ```bash
-npm run deploy
-# or: yarn deploy, pnpm deploy, bun deploy, etc.
+bun run deploy
+# or: npm run deploy, yarn deploy, pnpm deploy, etc.
 ```
 
 ## 🎯 How to Play
