@@ -31,9 +31,9 @@ A modern web-based implementation of the classic Battleship game, built with van
   - Hit (wounded), miss, and ship sinking (killed) sounds
   - UI button interactions (click)
 - **Visual Indicators**:
-  - Red cells for hits
-  - "X" markers for misses
-  - "O" markers for verified empty cells (optional)
+  - "X" markers (in red) for hits
+  - "O" markers (in blue) for misses
+  - "O" markers with light blue background for verified empty cells (optional)
 - **Settings Panel**:
   - Toggle verified empty cell marking
   - Enable/disable sound effects
@@ -113,7 +113,7 @@ npm run deploy
 
 2. **Gameplay**:
    - Click on the computer's board to attack
-   - Red cells indicate hits, "X" marks indicate misses
+   - "X" markers (in red) indicate hits, "O" markers (in blue) indicate misses
    - When you hit a ship, you get another turn
    - Sink all enemy ships to win!
 
