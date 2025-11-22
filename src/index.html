@@ -34,7 +34,7 @@
 
     <title>Battleship</title>
   </head>
-  <body class="container d-flex flex-column min-vh-100">
+  <body class="container d-flex flex-column gap-4 justify-content-between min-vh-100">
     <header>
       <nav class="navbar">
         <div class="container-fluid">
@@ -51,8 +51,8 @@
         </div>
       </nav>
     </header>
-    <main class="flex-grow-1 mt-3">
-      <div class="game-boards">
+    <main class="flex-grow-1 d-flex flex-column gap-4 justify-content-between">
+      <div class="game-boards flex-grow-1">
         <div class="player">
           <p>Your board</p>
           <div class="game-board border rounded"></div>
@@ -67,55 +67,57 @@
           </button>
         </div>
       </div>
-      <div class="d-flex align-items-center gap-2 button-controls">
-        <button
-          class="btn randomize d-flex align-items-center gap-1 bg-secondary-subtle px-3 rounded"
+      <div class="d-flex flex-column gap-2">
+        <div class="d-flex align-items-center gap-2">
+          <button
+            class="btn randomize d-flex align-items-center gap-1 bg-secondary-subtle px-3 rounded"
+          >
+            Randomize
+            <i class="bi bi-shuffle"></i>
+          </button>
+          <button
+            class="btn cancel-button btn-danger d-flex align-items-center gap-1 px-3 rounded"
+            style="display: none"
+            disabled
+          >
+            Cancel Game
+            <i class="bi bi-x-circle"></i>
+          </button>
+        </div>
+        <div
+          class="settings d-flex align-items-center gap-2 bg-secondary-subtle rounded"
         >
-          Randomize
-          <i class="bi bi-shuffle"></i>
-        </button>
-        <button
-          class="btn cancel-button btn-danger d-flex align-items-center gap-1 px-3 rounded"
-          style="display: none"
-          disabled
-        >
-          Cancel Game
-          <i class="bi bi-x-circle"></i>
-        </button>
-      </div>
-      <div
-        class="settings my-2 d-flex align-items-center gap-2 bg-secondary-subtle rounded"
-      >
-        <span class="settings-label fw-medium">Settings:</span>
-        <div class="d-flex align-items-center gap-3">
-          <div class="form-check mb-0">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              name="mark-verified"
-              id="mark-verified"
-              checked
-            />
-            <label class="form-check-label" for="mark-verified"
-              >Mark verified empty cells</label
-            >
-          </div>
-          <div class="form-check mb-0">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              name="sound-on"
-              id="sound-on"
-              checked
-            />
-            <label class="form-check-label" for="sound-on">Sound on</label>
+          <span class="fw-medium">Settings:</span>
+          <div class="d-flex align-items-center gap-3">
+            <div class="form-check mb-0">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="mark-verified"
+                id="mark-verified"
+                checked
+              />
+              <label class="form-check-label" for="mark-verified"
+                >Mark verified empty cells</label
+              >
+            </div>
+            <div class="form-check mb-0">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="sound-on"
+                id="sound-on"
+                checked
+              />
+              <label class="form-check-label" for="sound-on">Sound on</label>
+            </div>
           </div>
         </div>
       </div>
     </main>
-    <footer class="container text-center fw-medium text-secondary mt-auto py-4">
+    <footer class="container text-center fw-medium text-secondary pb-2">
       <p class="mb-2">
-        Engineered with ♥ by <span class="fw-semibold">Gideon Adeti</span>
+        Engineered by <span class="fw-semibold">Gideon Adeti</span>
       </p>
       <div class="social-links d-flex justify-content-center gap-3">
         <a
