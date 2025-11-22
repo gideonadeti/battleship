@@ -306,4 +306,23 @@ footer {
       padding: 0;
     }
   }
+
+  .social-links {
+    a {
+      transition: transform 0.2s ease, color 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        transform: translateY(-2px) scale(1.1);
+        color: $primary !important;
+        text-decoration: none;
+      }
+
+      &:active {
+        transform: translateY(0) scale(1.05);
+      }
+    }
+  }
 }

@@ -76,14 +76,16 @@
         </button>
         <button
           class="btn cancel-button btn-danger d-flex align-items-center gap-1 px-3 rounded"
-          style="display: none;"
+          style="display: none"
           disabled
         >
           Cancel Game
           <i class="bi bi-x-circle"></i>
         </button>
       </div>
-      <div class="settings my-2 d-flex align-items-center gap-2 bg-secondary-subtle rounded">
+      <div
+        class="settings my-2 d-flex align-items-center gap-2 bg-secondary-subtle rounded"
+      >
         <span class="settings-label fw-medium">Settings:</span>
         <div class="d-flex align-items-center gap-3">
           <div class="form-check mb-0">
@@ -111,16 +113,56 @@
         </div>
       </div>
     </main>
-    <footer class="container text-center fw-medium text-secondary mt-auto">
-      <p>
+    <footer class="container text-center fw-medium text-secondary mt-auto py-4">
+      <p class="mb-2">
+        Engineered with ♥ by <span class="fw-semibold">Gideon Adeti</span>
+      </p>
+      <div class="social-links d-flex justify-content-center gap-3">
+        <a
+          href="https://github.com/gideonadeti"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-secondary text-decoration-none"
+          title="GitHub"
+          aria-label="GitHub"
+        >
+          <i class="bi bi-github fs-5"></i>
+        </a>
+        <a
+          href="https://linkedin.com/in/gideonadeti"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-secondary text-decoration-none"
+          title="LinkedIn"
+          aria-label="LinkedIn"
+        >
+          <i class="bi bi-linkedin fs-5"></i>
+        </a>
+        <a
+          href="https://x.com/gideonadeti0"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-secondary text-decoration-none"
+          title="X (Twitter)"
+          aria-label="X (Twitter)"
+        >
+          <i class="bi bi-twitter-x fs-5"></i>
+        </a>
+        <a
+          href="mailto:gideonadeti0@gmail.com"
+          class="text-secondary text-decoration-none"
+          title="Email"
+          aria-label="Email"
+        >
+          <i class="bi bi-envelope fs-5"></i>
+        </a>
+      </div>
+      <p class="mt-2 mb-0 small">
         &copy;
         <script>
           document.write(new Date().getFullYear());
         </script>
-        Battleship. Created By
-        <a class="text-primary" href="https://github.com/gideonadeti" target="_blank"
-          >Gideon Adeti</a
-        >. All Rights Reserved.
+        Battleship. All Rights Reserved.
       </p>
     </footer>
 
@@ -227,9 +269,7 @@
                 You and the computer take turns to attack by clicking on a grid
                 coordinate on the opponent's board.
               </li>
-              <li>
-                A hit is marked in red, and a miss is marked with an "X".
-              </li>
+              <li>A hit is marked in red, and a miss is marked with an "X".</li>
               <li>
                 If a ship is hit, the current player continues to attack until
                 the next miss, then turns are switched.
