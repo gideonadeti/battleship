@@ -227,6 +227,12 @@ Contributions, issues, and feature requests are welcome! Feel free to:
 
 Please ensure your code follows the existing style and includes appropriate tests.
 
+## Support
+
+If you find this project helpful or interesting, consider supporting me:
+
+[☕ Buy me a coffee](https://buymeacoffee.com/gideonadeti)
+
 ---
 
 **Enjoy playing Battleship! May the best strategist win! 🎯**
