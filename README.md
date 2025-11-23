@@ -208,10 +208,6 @@ npm test
 - **User Experience First**: Intuitive controls and visual feedback
 - **Performance**: Optimized rendering and efficient algorithms
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## 🙏 Acknowledgments
 
 This project was built as part of my web development learning journey using [The Odin Project](https://www.theodinproject.com) curriculum. Special thanks to:
