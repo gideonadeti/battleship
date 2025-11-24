@@ -4,6 +4,21 @@ A modern web-based implementation of the classic Battleship game, built with van
 
 **[Play the game live](https://gideonadeti.github.io/battleship)**
 
+## Table of Contents
+
+- [Project History](#project-history)
+- [Features](#features)
+- [Screenshots](#screenshots)
+- [Future Plans](#future-plans)
+- [Getting Started](#getting-started)
+- [How to Play](#how-to-play)
+- [Tech Stack](#tech-stack)
+- [Testing](#testing)
+- [Design Philosophy](#design-philosophy)
+- [Acknowledgments](#acknowledgments)
+- [Contributing](#contributing)
+- [Support](#support)
+
 ## Project History
 
 This is the **third version** of my Battleship implementation, showcasing the evolution and improvement of my web development skills over time:
