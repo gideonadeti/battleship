@@ -24,7 +24,7 @@ A modern web-based implementation of the classic Battleship game, built with van
     - [Testing](#testing)
     - [Development](#development)
   - [Project History](#project-history)
-  - [Getting Started](#getting-started)
+  - [Running Locally](#running-locally)
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
     - [Building for Production](#building-for-production)
@@ -155,7 +155,7 @@ This is the **third version** of my Battleship implementation, showcasing the ev
 
 Each version demonstrates progress in code organization, feature implementation, and overall game polish.
 
-## Getting Started
+## Running Locally
 
 ### Prerequisites
 
