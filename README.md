@@ -30,10 +30,10 @@ A modern web-based implementation of the classic Battleship game, built with van
     - [Building for Production](#building-for-production)
     - [Running Tests](#running-tests)
     - [Deployment](#deployment)
-  - [Future Improvements](#future-improvements)
-  - [Acknowledgments](#acknowledgments)
   - [Contributing](#contributing)
   - [Support](#support)
+  - [Future Improvements](#future-improvements)
+  - [Acknowledgments](#acknowledgments)
 
 ## Features
 
@@ -218,20 +218,6 @@ bun run deploy
 # or: npm run deploy, yarn deploy, pnpm deploy, etc.
 ```
 
-## Future Improvements
-
-This project keeps evolving alongside my other portfolio pieces. Upcoming enhancements include:
-
-- **Leaderboard Integration**: Connect gameplay stats to the [Real-time Leaderboard](https://github.com/gideonadeti/realtime-leaderboard) ecosystem with opt-in score saving and real-time ranking updates across games.
-- More features coming soon...
-
-## Acknowledgments
-
-This project was built as part of my web development learning journey using [The Odin Project](https://www.theodinproject.com) curriculum. Special thanks to:
-
-- [The Odin Project](https://www.theodinproject.com) for providing the [Battleship project lesson](https://www.theodinproject.com/lessons/node-path-javascript-battleship) and comprehensive curriculum
-- The classic Battleship game for the timeless gameplay mechanics
-
 ## Contributing
 
 Contributions, issues, and feature requests are welcome! Feel free to:
@@ -249,6 +235,20 @@ Please ensure your code follows the existing style and includes appropriate test
 If you find this project helpful or interesting, consider supporting me:
 
 [Buy me a coffee](https://buymeacoffee.com/gideonadeti)
+
+## Future Improvements
+
+This project keeps evolving alongside my other portfolio pieces. Upcoming enhancements include:
+
+- **Leaderboard Integration**: Connect gameplay stats to the [Real-time Leaderboard](https://github.com/gideonadeti/realtime-leaderboard) ecosystem with opt-in score saving and real-time ranking updates across games.
+- More features coming soon...
+
+## Acknowledgments
+
+This project was built as part of my web development learning journey using [The Odin Project](https://www.theodinproject.com) curriculum. Special thanks to:
+
+- [The Odin Project](https://www.theodinproject.com) for providing the [Battleship project lesson](https://www.theodinproject.com/lessons/node-path-javascript-battleship) and comprehensive curriculum
+- The classic Battleship game for the timeless gameplay mechanics
 
 ---
 
