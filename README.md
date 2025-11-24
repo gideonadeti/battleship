@@ -24,8 +24,6 @@ A modern web-based implementation of the classic Battleship game, built with van
     - [Testing](#testing)
     - [Development](#development)
   - [Project History](#project-history)
-  - [Future Plans](#future-plans)
-    - [Leaderboard Integration](#leaderboard-integration)
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
@@ -35,6 +33,8 @@ A modern web-based implementation of the classic Battleship game, built with van
   - [How to Play](#how-to-play)
   - [Testing](#testing-1)
   - [Design Philosophy](#design-philosophy)
+  - [Future Plans](#future-plans)
+    - [Leaderboard Integration](#leaderboard-integration)
   - [Acknowledgments](#acknowledgments)
   - [Contributing](#contributing)
   - [Support](#support)
@@ -156,23 +156,6 @@ This is the **third version** of my Battleship implementation, showcasing the ev
 
 Each version demonstrates progress in code organization, feature implementation, and overall game polish.
 
-## Future Plans
-
-### Leaderboard Integration
-
-This project is planned to integrate with the [Real-time Leaderboard](https://github.com/gideonadeti/realtime-leaderboard) project, allowing players to compete globally and track their rankings.
-
-**Planned Features:**
-
-- **Opt-in Score Saving**: After each game, players can choose to save their game results to join leaderboard
-- **Automatic Updates & Real-time Rankings**: After each save, the leaderboards will be updated and the updates will be reflected in real-time on the [leaderboard frontend](https://github.com/gideonadeti/realtime-leaderboard-frontend)
-- **Competitive Play**: Players can compete against others and see their rankings improve over time
-
-**Related Projects:**
-
-- [Real-time Leaderboard Backend](https://github.com/gideonadeti/realtime-leaderboard) - NestJS backend with MongoDB and Prisma
-- [Real-time Leaderboard Frontend](https://github.com/gideonadeti/realtime-leaderboard-frontend) - Next.js frontend with ShadCN UI
-
 ## Getting Started
 
 ### Prerequisites
@@ -277,6 +260,23 @@ npm test
 - **Test-Driven Development**: Comprehensive test coverage
 - **User Experience First**: Intuitive controls and visual feedback
 - **Performance**: Optimized rendering and efficient algorithms
+
+## Future Plans
+
+### Leaderboard Integration
+
+This project is planned to integrate with the [Real-time Leaderboard](https://github.com/gideonadeti/realtime-leaderboard) project, allowing players to compete globally and track their rankings.
+
+**Planned Features:**
+
+- **Opt-in Score Saving**: After each game, players can choose to save their game results to join leaderboard
+- **Automatic Updates & Real-time Rankings**: After each save, the leaderboards will be updated and the updates will be reflected in real-time on the [leaderboard frontend](https://github.com/gideonadeti/realtime-leaderboard-frontend)
+- **Competitive Play**: Players can compete against others and see their rankings improve over time
+
+**Related Projects:**
+
+- [Real-time Leaderboard Backend](https://github.com/gideonadeti/realtime-leaderboard) - NestJS backend with MongoDB and Prisma
+- [Real-time Leaderboard Frontend](https://github.com/gideonadeti/realtime-leaderboard-frontend) - Next.js frontend with ShadCN UI
 
 ## Acknowledgments
 
