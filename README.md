@@ -2,9 +2,9 @@
 
 A modern web-based implementation of the classic Battleship game, built with vanilla JavaScript, SCSS, and Bootstrap. This project was developed as part of The Odin Project curriculum to practice Test-Driven Development (TDD) and complex DOM manipulation.
 
-**🎮 [Play the game live](https://gideonadeti.github.io/battleship)**
+**[Play the game live](https://gideonadeti.github.io/battleship)**
 
-## 📜 Project History
+## Project History
 
 This is the **third version** of my Battleship implementation, showcasing the evolution and improvement of my web development skills over time:
 
@@ -14,7 +14,7 @@ This is the **third version** of my Battleship implementation, showcasing the ev
 
 Each version demonstrates progress in code organization, feature implementation, and overall game polish.
 
-## 🎮 Features
+## Features
 
 ### Core Gameplay
 
@@ -58,7 +58,7 @@ Each version demonstrates progress in code organization, feature implementation,
 - **Play Again**: Quick restart functionality
 - **Cancel Game**: Return to setup phase before starting
 
-## 📸 Screenshots
+## Screenshots
 
 ### Desktop (MacBook Air)
 
@@ -93,7 +93,7 @@ Each version demonstrates progress in code organization, feature implementation,
   </tr>
 </table>
 
-## 🔮 Future Plans
+## Future Plans
 
 ### Leaderboard Integration
 
@@ -110,7 +110,7 @@ This project is planned to integrate with the [Real-time Leaderboard](https://gi
 - [Real-time Leaderboard Backend](https://github.com/gideonadeti/realtime-leaderboard) - NestJS backend with MongoDB and Prisma
 - [Real-time Leaderboard Frontend](https://github.com/gideonadeti/realtime-leaderboard-frontend) - Next.js frontend with ShadCN UI
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -169,7 +169,7 @@ bun run deploy
 # or: npm run deploy, yarn deploy, pnpm deploy, etc.
 ```
 
-## 🎯 How to Play
+## How to Play
 
 1. **Setup Phase**:
    - Ships are randomly placed at the start
@@ -190,7 +190,7 @@ bun run deploy
 
 For detailed instructions, click the info icon (ℹ️) in the game interface.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
 
@@ -218,7 +218,7 @@ For detailed instructions, click the info icon (ℹ️) in the game interface.
 - **HTML Webpack Plugin**: HTML generation
 - **Copy Webpack Plugin**: Asset management
 
-## 🧪 Testing
+## Testing
 
 This project follows Test-Driven Development (TDD) principles. Tests cover:
 
@@ -235,7 +235,7 @@ Run tests with:
 npm test
 ```
 
-## 🎨 Design Philosophy
+## Design Philosophy
 
 - **Separation of Concerns**: Models, views, and controllers are clearly separated
 - **Modular Architecture**: Each component has a single responsibility
@@ -243,14 +243,14 @@ npm test
 - **User Experience First**: Intuitive controls and visual feedback
 - **Performance**: Optimized rendering and efficient algorithms
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 This project was built as part of my web development learning journey using [The Odin Project](https://www.theodinproject.com) curriculum. Special thanks to:
 
 - [The Odin Project](https://www.theodinproject.com) for providing the [Battleship project lesson](https://www.theodinproject.com/lessons/node-path-javascript-battleship) and comprehensive curriculum
 - The classic Battleship game for the timeless gameplay mechanics
 
-## 🤝 Contributing
+## Contributing
 
 Contributions, issues, and feature requests are welcome! Feel free to:
 
@@ -266,8 +266,8 @@ Please ensure your code follows the existing style and includes appropriate test
 
 If you find this project helpful or interesting, consider supporting me:
 
-[☕ Buy me a coffee](https://buymeacoffee.com/gideonadeti)
+[Buy me a coffee](https://buymeacoffee.com/gideonadeti)
 
 ---
 
-**Enjoy playing Battleship! May the best strategist win! 🎯**
+**Enjoy playing Battleship! May the best strategist win!**
