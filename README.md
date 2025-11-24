@@ -30,7 +30,6 @@ A modern web-based implementation of the classic Battleship game, built with van
     - [Building for Production](#building-for-production)
     - [Running Tests](#running-tests)
     - [Deployment](#deployment)
-  - [How to Play](#how-to-play)
   - [Testing](#testing-1)
   - [Future Plans](#future-plans)
     - [Leaderboard Integration](#leaderboard-integration)
@@ -211,27 +210,6 @@ Ship the latest build to GitHub Pages (or your preferred platform):
 bun run deploy
 # or: npm run deploy, yarn deploy, pnpm deploy, etc.
 ```
-
-## How to Play
-
-1. **Setup Phase**:
-   - Ships are randomly placed at the start
-   - Drag and drop ships to reposition them
-   - Double-click ships to rotate them
-   - Use "Randomize" to get new random placements
-   - Click "Start Game" when ready
-
-2. **Gameplay**:
-   - Click on the computer's board to attack
-   - "X" markers (in red) indicate hits, "O" markers (in blue) indicate misses
-   - When you hit a ship, you get another turn
-   - Sink all enemy ships to win!
-
-3. **Settings**:
-   - **Mark verified empty cells**: Shows "O" on cells adjacent to sunk ships
-   - **Sound on**: Toggle game sound effects
-
-For detailed instructions, click the info icon (ℹ️) in the game interface.
 
 ## Testing
 
