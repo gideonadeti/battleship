@@ -83,36 +83,16 @@ A modern web-based implementation of the classic Battleship game, built with van
 
 ### Desktop (MacBook Air)
 
-<table>
-  <tr>
-    <td>
-      <img src="src/assets/screenshots/Macbook-Air-gideonadeti.github.io%20(3).png" alt="Playing Battleship on desktop with both boards visible" />
-    </td>
-    <td>
-      <img src="src/assets/screenshots/Macbook-Air-gideonadeti.github.io%20(4).png" alt="Desktop game-over screen showing a victory dialog" />
-    </td>
-  </tr>
-</table>
+![Playing Battleship on desktop with both boards visible](src/assets/screenshots/Macbook-Air-gideonadeti.github.io%20(3).png)
+![Desktop game-over screen showing a victory dialog](src/assets/screenshots/Macbook-Air-gideonadeti.github.io%20(4).png)
 
 ### Tablet (iPad Pro 11")
 
-<table>
-  <tr>
-    <td>
-      <img src="src/assets/screenshots/iPad-PRO-11-gideonadeti.github.io%20(2).png" alt="Tablet game-over screen showing a defeat dialog" />
-    </td>
-  </tr>
-</table>
+![Tablet game-over screen showing a defeat dialog](src/assets/screenshots/iPad-PRO-11-gideonadeti.github.io%20(2).png)
 
 ### Mobile (iPhone 13 Pro)
 
-<table>
-  <tr>
-    <td>
-      <img src="src/assets/screenshots/iPhone-13-PRO-gideonadeti.github.io%20(1).png" alt="Mobile game-over screen showing a defeat dialog" />
-    </td>
-  </tr>
-</table>
+![Mobile game-over screen showing a defeat dialog](src/assets/screenshots/iPhone-13-PRO-gideonadeti.github.io%20(1).png)
 
 ## Technologies Used
 
@@ -200,7 +180,7 @@ bun test
 # or: npm test, yarn test, pnpm test, etc.
 ```
 
-Core test coverage includes:
+Battleship follows a Test-Driven Development (TDD) workflow, so the suite covers:
 
 - Ship model functionality
 - Game board operations
@@ -234,7 +214,7 @@ Please ensure your code follows the existing style and includes appropriate test
 
 If you find this project helpful or interesting, consider supporting me:
 
-[Buy me a coffee](https://buymeacoffee.com/gideonadeti)
+[☕ Buy me a coffee](https://buymeacoffee.com/gideonadeti)
 
 ## Future Improvements
 
