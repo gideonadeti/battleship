@@ -30,7 +30,6 @@ A modern web-based implementation of the classic Battleship game, built with van
     - [Building for Production](#building-for-production)
     - [Running Tests](#running-tests)
     - [Deployment](#deployment)
-  - [Testing](#testing-1)
   - [Future Plans](#future-plans)
     - [Leaderboard Integration](#leaderboard-integration)
   - [Acknowledgments](#acknowledgments)
@@ -202,6 +201,15 @@ bun test
 # or: npm test, yarn test, pnpm test, etc.
 ```
 
+Core test coverage includes:
+
+- Ship model functionality
+- Game board operations
+- Player actions
+- Computer AI logic
+- Game controller flow
+- UI drag-and-drop interactions
+
 ### Deployment
 
 Ship the latest build to GitHub Pages (or your preferred platform):
@@ -209,23 +217,6 @@ Ship the latest build to GitHub Pages (or your preferred platform):
 ```bash
 bun run deploy
 # or: npm run deploy, yarn deploy, pnpm deploy, etc.
-```
-
-## Testing
-
-This project follows Test-Driven Development (TDD) principles. Tests cover:
-
-- Ship model functionality
-- Game board operations
-- Player actions
-- Computer AI logic
-- Game controller flow
-- UI drag and drop interactions
-
-Run tests with:
-
-```bash
-npm test
 ```
 
 ## Future Plans
