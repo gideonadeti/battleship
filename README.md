@@ -58,6 +58,41 @@ Each version demonstrates progress in code organization, feature implementation,
 - **Play Again**: Quick restart functionality
 - **Cancel Game**: Return to setup phase before starting
 
+## 📸 Screenshots
+
+### Desktop (MacBook Air)
+
+<table>
+  <tr>
+    <td>
+      <img src="src/assets/screenshots/Macbook-Air-gideonadeti.github.io%20(3).png" alt="Playing Battleship on desktop with both boards visible" />
+    </td>
+    <td>
+      <img src="src/assets/screenshots/Macbook-Air-gideonadeti.github.io%20(4).png" alt="Desktop game-over screen showing a victory dialog" />
+    </td>
+  </tr>
+</table>
+
+### Tablet (iPad Pro 11")
+
+<table>
+  <tr>
+    <td>
+      <img src="src/assets/screenshots/iPad-PRO-11-gideonadeti.github.io%20(2).png" alt="Tablet game-over screen showing a defeat dialog" />
+    </td>
+  </tr>
+</table>
+
+### Mobile (iPhone 13 Pro)
+
+<table>
+  <tr>
+    <td>
+      <img src="src/assets/screenshots/iPhone-13-PRO-gideonadeti.github.io%20(1).png" alt="Mobile game-over screen showing a defeat dialog" />
+    </td>
+  </tr>
+</table>
+
 ## 🔮 Future Plans
 
 ### Leaderboard Integration
