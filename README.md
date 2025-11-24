@@ -32,7 +32,6 @@ A modern web-based implementation of the classic Battleship game, built with van
     - [Deployment](#deployment)
   - [How to Play](#how-to-play)
   - [Testing](#testing-1)
-  - [Design Philosophy](#design-philosophy)
   - [Future Plans](#future-plans)
     - [Leaderboard Integration](#leaderboard-integration)
   - [Acknowledgments](#acknowledgments)
@@ -252,14 +251,6 @@ Run tests with:
 ```bash
 npm test
 ```
-
-## Design Philosophy
-
-- **Separation of Concerns**: Models, views, and controllers are clearly separated
-- **Modular Architecture**: Each component has a single responsibility
-- **Test-Driven Development**: Comprehensive test coverage
-- **User Experience First**: Intuitive controls and visual feedback
-- **Performance**: Optimized rendering and efficient algorithms
 
 ## Future Plans
 
