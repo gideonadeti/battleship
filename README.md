@@ -30,7 +30,7 @@ A modern web-based implementation of the classic Battleship game, built with van
     - [Building for Production](#building-for-production)
     - [Running Tests](#running-tests)
     - [Deployment](#deployment)
-  - [Future Plans](#future-plans)
+  - [Future Improvements](#future-improvements)
   - [Acknowledgments](#acknowledgments)
   - [Contributing](#contributing)
   - [Support](#support)
@@ -218,7 +218,7 @@ bun run deploy
 # or: npm run deploy, yarn deploy, pnpm deploy, etc.
 ```
 
-## Future Plans
+## Future Improvements
 
 This project keeps evolving alongside my other portfolio pieces. Upcoming enhancements include:
 
