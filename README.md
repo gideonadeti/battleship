@@ -225,10 +225,7 @@ This project keeps evolving alongside my other portfolio pieces. Upcoming enhanc
 
 ## Acknowledgments
 
-This project was built as part of my web development learning journey using [The Odin Project](https://www.theodinproject.com) curriculum. Special thanks to:
-
-- [The Odin Project](https://www.theodinproject.com) for providing the [Battleship project lesson](https://www.theodinproject.com/lessons/node-path-javascript-battleship) and comprehensive curriculum
-- The classic Battleship game for the timeless gameplay mechanics
+This project was built as part of my web development learning journey using [The Odin Project](https://www.theodinproject.com) curriculum. Special thanks to them for providing the [Battleship project lesson](https://www.theodinproject.com/lessons/node-path-javascript-battleship) and comprehensive curriculum.
 
 ---
 
