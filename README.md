@@ -18,11 +18,11 @@ A modern web-based implementation of the classic Battleship game, built with van
     - [Desktop (MacBook Air)](#desktop-macbook-air)
     - [Tablet (iPad Pro 11")](#tablet-ipad-pro-11)
     - [Mobile (iPhone 13 Pro)](#mobile-iphone-13-pro)
-  - [Tech Stack](#tech-stack)
-    - [Frontend](#frontend)
-    - [Build Tools](#build-tools)
-    - [Testing](#testing)
-    - [Development](#development)
+- [Technologies Used](#technologies-used)
+  - [Frontend](#frontend)
+  - [Build Tools](#build-tools)
+  - [Testing](#testing)
+  - [Development](#development)
   - [Project History](#project-history)
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
@@ -117,7 +117,7 @@ A modern web-based implementation of the classic Battleship game, built with van
   </tr>
 </table>
 
-## Tech Stack
+## Technologies Used
 
 ### Frontend
 
