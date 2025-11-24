@@ -8,7 +8,6 @@ A modern web-based implementation of the classic Battleship game, built with van
 
 - [Battleship](#battleship)
   - [Table of Contents](#table-of-contents)
-  - [Project History](#project-history)
   - [Features](#features)
     - [Core Gameplay](#core-gameplay)
     - [Ship Placement](#ship-placement)
@@ -19,6 +18,12 @@ A modern web-based implementation of the classic Battleship game, built with van
     - [Desktop (MacBook Air)](#desktop-macbook-air)
     - [Tablet (iPad Pro 11")](#tablet-ipad-pro-11)
     - [Mobile (iPhone 13 Pro)](#mobile-iphone-13-pro)
+  - [Tech Stack](#tech-stack)
+    - [Frontend](#frontend)
+    - [Build Tools](#build-tools)
+    - [Testing](#testing)
+    - [Development](#development)
+  - [Project History](#project-history)
   - [Future Plans](#future-plans)
     - [Leaderboard Integration](#leaderboard-integration)
   - [Getting Started](#getting-started)
@@ -28,26 +33,11 @@ A modern web-based implementation of the classic Battleship game, built with van
     - [Running Tests](#running-tests)
     - [Deployment](#deployment)
   - [How to Play](#how-to-play)
-  - [Tech Stack](#tech-stack)
-    - [Frontend](#frontend)
-    - [Build Tools](#build-tools)
-    - [Testing](#testing)
-    - [Development](#development)
   - [Testing](#testing-1)
   - [Design Philosophy](#design-philosophy)
   - [Acknowledgments](#acknowledgments)
   - [Contributing](#contributing)
   - [Support](#support)
-
-## Project History
-
-This is the **third version** of my Battleship implementation, showcasing the evolution and improvement of my web development skills over time:
-
-- **v1** - [GitHub](https://github.com/Gideon-D-Adeti/battleship) | [Live Demo](https://gideon-d-adeti.github.io/battleship)
-- **v2** - [GitHub](https://github.com/GDA0/battleship) | [Live Demo](https://gda0.github.io/battleship/)
-- **v3** (Current) - [GitHub](https://github.com/gideonadeti/battleship) | [Live Demo](https://gideonadeti.github.io/battleship)
-
-Each version demonstrates progress in code organization, feature implementation, and overall game polish.
 
 ## Features
 
@@ -127,6 +117,44 @@ Each version demonstrates progress in code organization, feature implementation,
     </td>
   </tr>
 </table>
+
+## Tech Stack
+
+### Frontend
+
+- **HTML5**: Semantic markup
+- **SCSS**: Styling with variables and mixins
+- **JavaScript (ES6+)**: Modern JavaScript features
+- **Bootstrap 5.3**: Responsive UI framework
+- **Bootstrap Icons**: Icon library
+
+### Build Tools
+
+- **Webpack 5**: Module bundler
+- **Babel**: JavaScript transpiler
+- **Sass/SCSS Loader**: CSS preprocessing
+- **PostCSS & Autoprefixer**: CSS optimization
+
+### Testing
+
+- **Jest**: Testing framework
+- **Babel Jest**: ES6+ support for tests
+
+### Development
+
+- **Webpack Dev Server**: Hot module replacement
+- **HTML Webpack Plugin**: HTML generation
+- **Copy Webpack Plugin**: Asset management
+
+## Project History
+
+This is the **third version** of my Battleship implementation, showcasing the evolution and improvement of my web development skills over time:
+
+- **v1** - [GitHub](https://github.com/Gideon-D-Adeti/battleship) | [Live Demo](https://gideon-d-adeti.github.io/battleship)
+- **v2** - [GitHub](https://github.com/GDA0/battleship) | [Live Demo](https://gda0.github.io/battleship/)
+- **v3** (Current) - [GitHub](https://github.com/gideonadeti/battleship) | [Live Demo](https://gideonadeti.github.io/battleship)
+
+Each version demonstrates progress in code organization, feature implementation, and overall game polish.
 
 ## Future Plans
 
@@ -224,34 +252,6 @@ bun run deploy
    - **Sound on**: Toggle game sound effects
 
 For detailed instructions, click the info icon (ℹ️) in the game interface.
-
-## Tech Stack
-
-### Frontend
-
-- **HTML5**: Semantic markup
-- **SCSS**: Styling with variables and mixins
-- **JavaScript (ES6+)**: Modern JavaScript features
-- **Bootstrap 5.3**: Responsive UI framework
-- **Bootstrap Icons**: Icon library
-
-### Build Tools
-
-- **Webpack 5**: Module bundler
-- **Babel**: JavaScript transpiler
-- **Sass/SCSS Loader**: CSS preprocessing
-- **PostCSS & Autoprefixer**: CSS optimization
-
-### Testing
-
-- **Jest**: Testing framework
-- **Babel Jest**: ES6+ support for tests
-
-### Development
-
-- **Webpack Dev Server**: Hot module replacement
-- **HTML Webpack Plugin**: HTML generation
-- **Copy Webpack Plugin**: Asset management
 
 ## Testing
 
