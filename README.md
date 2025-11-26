@@ -3,6 +3,7 @@
 A modern web-based implementation of the classic Battleship game, built with vanilla JavaScript, SCSS, and Bootstrap. This project was developed as part of The Odin Project curriculum to practice Test-Driven Development (TDD) and complex DOM manipulation.
 
 **[Play the game live](https://gideonadeti.github.io/battleship)**
+**Video Tutorial**: [Walkthrough on YouTube](https://youtu.be/kkSGNebMShg) - Learn how to play the game
 
 ## Table of Contents
 
